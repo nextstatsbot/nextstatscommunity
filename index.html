@@ -711,8 +711,7 @@ async function renderProfile(uid){
             }).join("")}</tbody></table>`
           : `<div class="empty">No topics posted yet.</div>`}
       </div>`;
-  } catch(e){ col.innerHTML=`<div class="empty">Error loading profile: ${esc(e.message)}<br><br><small style="color:var(--text2)">If this is a Firestore index error, check the browser console for a link to create the required index.</small></div>`; }
-}
+  } catch(e){ col.innerHTML=`<div class="empty">Error loading profile: ${esc(e.message)}</div>`; }
 }
 
 // ─── PROFILE SETTINGS ────────────────────────────────────────
