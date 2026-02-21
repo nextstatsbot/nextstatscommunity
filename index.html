@@ -8,317 +8,290 @@
 <link rel="apple-touch-icon" href="logo-dark.png"/>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#111920;--bg2:#171f28;--bg3:#1e2a35;--bg4:#243342;--border:#2a3a47;--steam:#4c9ede;--steam-dk:#1b2838;--steam-hover:#6ab4e8;--text:#c7d5e0;--text2:#7a94a8;--white:#e8eef3;--radius:4px;--green:#4caf8a;--red:#e05252;--yellow:#e0b252;--purple:#8b7ee8;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+:root{
+  --bg:#111920;--bg2:#171f28;--bg3:#1e2a35;--border:#2a3a47;
+  --steam:#4c9ede;--steam-dk:#1b2838;--steam-h:#6ab4e8;
+  --text:#c7d5e0;--text2:#7a94a8;--white:#e8eef3;
+  --green:#4caf8a;--red:#e05252;--yellow:#e0b252;--purple:#8b7ee8;
+  --r:4px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:"Poppins",sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
-a{color:var(--steam);text-decoration:none}a:hover{color:var(--steam-hover)}
+a{color:var(--steam);text-decoration:none}
+a:hover{color:var(--steam-h)}
 button{cursor:pointer;font-family:"Poppins",sans-serif}
 input,textarea,select{font-family:"Poppins",sans-serif;font-size:14px}
-::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--text2)}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 
 /* NAV */
-nav{background:var(--steam-dk);border-bottom:1px solid #243342;position:sticky;top:0;z-index:200;height:52px;display:flex;align-items:center;padding:0 20px}
-.nav-logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:16px;color:var(--white);text-decoration:none;flex-shrink:0}
-.nav-logo img{width:26px;height:26px;object-fit:contain}
-.nav-logo-text{display:flex;align-items:baseline;letter-spacing:-.3px}
-.nav-logo-text .nx{color:var(--white)}.nav-logo-text .st{color:var(--steam)}
-.nav-sep{width:1px;height:24px;background:var(--border);margin:0 14px;flex-shrink:0}
-.nav-community{font-weight:700;font-size:13px;color:var(--text2)}
+nav{background:var(--steam-dk);border-bottom:1px solid #243342;height:52px;display:flex;align-items:center;padding:0 20px;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:16px;cursor:pointer}
+.logo img{width:26px;height:26px;object-fit:contain}
+.logo-text{display:flex;align-items:baseline}
+.logo-text b{color:var(--white)}
+.logo-text span{color:var(--steam)}
+.nav-divider{width:1px;height:22px;background:var(--border);margin:0 14px}
+.nav-lbl{font-weight:700;font-size:13px;color:var(--text2)}
 .nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
-.avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--border);flex-shrink:0;cursor:pointer}
-.avatar-sm{width:24px;height:24px;border-width:1px}
-.avatar-lg{width:44px;height:44px}
-.avatar-xl{width:80px;height:80px}
-.user-menu{position:relative}
-.user-dropdown{position:absolute;top:calc(100%+8px);right:0;background:var(--bg2);border:1px solid var(--border);border-radius:6px;min-width:190px;padding:6px;display:none;z-index:300;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-.user-menu:hover .user-dropdown,.user-dropdown:hover{display:block}
-.user-dropdown a,.user-dropdown button{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--radius);color:var(--text);font-size:13px;font-weight:500;width:100%;background:transparent;border:none;text-align:left;transition:background .1s;cursor:pointer}
-.user-dropdown a:hover,.user-dropdown button:hover{background:var(--bg3);color:var(--white)}
-.user-dropdown .dd-divider{height:1px;background:var(--border);margin:4px 0}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:var(--radius);font-size:13px;font-weight:600;border:none;transition:all .15s;cursor:pointer;text-decoration:none}
-.btn-primary{background:var(--steam);color:#fff}.btn-primary:hover{background:var(--steam-hover);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:var(--r);font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .15s}
+.btn-primary{background:var(--steam);color:#fff}.btn-primary:hover{background:var(--steam-h)}
 .btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}.btn-ghost:hover{color:var(--white);border-color:var(--text2)}
-.btn-danger{background:rgba(224,82,82,.12);color:var(--red);border:1px solid rgba(224,82,82,.2)}.btn-danger:hover{background:rgba(224,82,82,.2)}
-.btn-green{background:rgba(76,175,138,.12);color:var(--green);border:1px solid rgba(76,175,138,.2)}.btn-green:hover{background:rgba(76,175,138,.2)}
-.btn-purple{background:rgba(139,126,232,.12);color:var(--purple);border:1px solid rgba(139,126,232,.2)}.btn-purple:hover{background:rgba(139,126,232,.2)}
+.btn-danger{background:rgba(224,82,82,.1);color:var(--red);border:1px solid rgba(224,82,82,.2)}.btn-danger:hover{background:rgba(224,82,82,.2)}
+.btn-green{background:rgba(76,175,138,.1);color:var(--green);border:1px solid rgba(76,175,138,.2)}.btn-green:hover{background:rgba(76,175,138,.2)}
+.btn-purple{background:rgba(139,126,232,.1);color:var(--purple);border:1px solid rgba(139,126,232,.2)}.btn-purple:hover{background:rgba(139,126,232,.2)}
 .btn-sm{padding:4px 10px;font-size:12px}
-.btn-like{background:transparent;border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;transition:all .15s}
-.btn-like:hover,.btn-like.liked{background:rgba(224,82,82,.1);border-color:rgba(224,82,82,.3);color:var(--red)}
-.btn-like.liked{color:var(--red)}
+
+/* USER MENU */
+.umenu{position:relative}
+.uavatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--border);cursor:pointer}
+.udrop{position:absolute;top:calc(100%+8px);right:0;background:var(--bg2);border:1px solid var(--border);border-radius:6px;min-width:185px;padding:5px;display:none;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.umenu:hover .udrop{display:block}
+.udrop a,.udrop button{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r);color:var(--text);font-size:13px;font-weight:500;width:100%;background:none;border:none;text-align:left;cursor:pointer}
+.udrop a:hover,.udrop button:hover{background:var(--bg3);color:var(--white)}
+.udrop hr{border:none;border-top:1px solid var(--border);margin:4px 0}
 
 /* BADGES */
 .badge{font-size:11px;font-weight:600;padding:2px 7px;border-radius:10px;display:inline-flex;align-items:center;gap:3px}
-.badge-admin{background:rgba(139,126,232,.15);color:var(--purple);border:1px solid rgba(139,126,232,.3)}
-.badge-verified{background:rgba(76,158,222,.12);color:var(--steam);border:1px solid rgba(76,158,222,.25)}
-.badge-adminonly{background:rgba(224,178,82,.1);color:var(--yellow);border:1px solid rgba(224,178,82,.25)}
+.b-admin{background:rgba(139,126,232,.15);color:var(--purple);border:1px solid rgba(139,126,232,.3)}
+.b-verified{background:rgba(76,158,222,.12);color:var(--steam);border:1px solid rgba(76,158,222,.25)}
+.b-locked{background:rgba(224,178,82,.1);color:var(--yellow);border:1px solid rgba(224,178,82,.25)}
+.b-tag{background:var(--bg3);color:var(--text2);font-size:11px;padding:2px 7px;border-radius:3px}
 
 /* LAYOUT */
-.layout{max-width:1060px;margin:0 auto;padding:24px 20px;display:grid;grid-template-columns:1fr 268px;gap:22px;align-items:start}
-.layout-full{max-width:900px;margin:0 auto;padding:24px 20px}
-@media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+.wrap{max-width:1060px;margin:0 auto;padding:24px 20px;display:grid;grid-template-columns:1fr 265px;gap:22px;align-items:start}
+.wrap-full{max-width:920px;margin:0 auto;padding:24px 20px}
+@media(max-width:768px){.wrap{grid-template-columns:1fr}.sidebar{display:none}}
 
 /* SIDEBAR */
-.sidebar{display:flex;flex-direction:column;gap:14px;position:sticky;top:68px}
+.sidebar{display:flex;flex-direction:column;gap:14px;position:sticky;top:62px}
 .scard{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden}
-.scard-hd{padding:11px 14px;border-bottom:1px solid var(--border);font-weight:700;font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px}
-.scard-bd{padding:8px}
-.ch-nav{list-style:none}
-.ch-nav li a{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:var(--radius);color:var(--text2);font-size:13px;font-weight:500;transition:all .12s}
-.ch-nav li a:hover,.ch-nav li a.active{background:var(--bg3);color:var(--white)}
-.ch-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.scard-title{padding:11px 14px;border-bottom:1px solid var(--border);font-weight:700;font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px}
+.scard-body{padding:7px}
+.chnav{list-style:none}
+.chnav li a{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:var(--r);color:var(--text2);font-size:13px;font-weight:500;transition:all .12s}
+.chnav li a:hover,.chnav li a.active{background:var(--bg3);color:var(--white)}
+.chdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
 /* CARD */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:6px}
-.card-hd{padding:13px 17px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px}
-.card-hd h2{font-weight:700;font-size:15px;color:var(--white)}
-.card-bd{padding:18px}
-
-/* TOPICS TABLE */
-.ttable{width:100%;border-collapse:collapse}
-.ttable th{padding:9px 13px;text-align:left;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.7px;border-bottom:1px solid var(--border)}
-.ttable th:not(:first-child){text-align:center;width:72px}
-.ttable td{padding:11px 13px;border-bottom:1px solid rgba(42,58,71,.45);vertical-align:middle}
-.ttable tr:last-child td{border-bottom:none}
-.ttable tbody tr{cursor:pointer;transition:background .1s}.ttable tbody tr:hover td{background:rgba(30,42,53,.4)}
-.t-title{font-weight:600;font-size:13px;color:var(--white);display:block;margin-bottom:3px;transition:color .12s}
-.ttable tbody tr:hover .t-title{color:var(--steam)}
-.t-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px}
-.cat-badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:3px}
-.tag{font-size:11px;color:var(--text2);background:var(--bg3);padding:1px 6px;border-radius:3px}
-.t-stat{font-size:13px;color:var(--text2);text-align:center}
+.card-head{padding:13px 17px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card-head h2{font-weight:700;font-size:15px;color:var(--white)}
 
 /* PAGE HEADER */
-.phdr{background:linear-gradient(180deg,#162130 0%,var(--bg) 100%);border-bottom:1px solid var(--border);padding:30px 20px}
+.phdr{background:linear-gradient(180deg,#162130,var(--bg));border-bottom:1px solid var(--border);padding:28px 20px}
 .phdr-inner{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.phdr-inner h1{font-weight:900;font-size:clamp(18px,3vw,26px);color:var(--white)}
+.phdr-inner h1{font-weight:900;font-size:clamp(17px,3vw,25px);color:var(--white)}
 .phdr-inner p{color:var(--text2);font-size:13px;margin-top:2px}
-.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:14px;flex-wrap:wrap}
-.breadcrumb a{color:var(--text2)}.breadcrumb a:hover{color:var(--white)}
 
-/* TOPIC / POST */
-.topic-hero{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:20px 22px;margin-bottom:6px}
-.topic-hero h1{font-weight:900;font-size:clamp(15px,2.5vw,21px);color:var(--white);margin:6px 0 10px}
-.post-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:18px 22px;margin-bottom:6px}
-.post-header{display:flex;align-items:flex-start;gap:11px;margin-bottom:13px}
-.post-author-info .pname{font-weight:600;font-size:13px;color:var(--white);display:flex;align-items:center;gap:6px}
-.post-author-info .pdate{font-size:11px;color:var(--text2);margin-top:1px}
-.post-body{font-size:14px;font-weight:400;color:var(--text);line-height:1.8;white-space:pre-wrap;word-break:break-word}
-.post-img{max-width:100%;max-height:400px;border-radius:6px;margin-top:14px;border:1px solid var(--border)}
-.post-footer{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
-.reply-form{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:20px 22px;margin-top:6px}
+/* TOPICS TABLE */
+.ttbl{width:100%;border-collapse:collapse}
+.ttbl th{padding:9px 13px;text-align:left;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.7px;border-bottom:1px solid var(--border)}
+.ttbl th:not(:first-child){text-align:center;width:70px}
+.ttbl td{padding:11px 13px;border-bottom:1px solid rgba(42,58,71,.4);vertical-align:middle}
+.ttbl tr:last-child td{border-bottom:none}
+.ttbl tbody tr{cursor:pointer}.ttbl tbody tr:hover td{background:rgba(30,42,53,.4)}
+.t-title{font-weight:600;font-size:13px;color:var(--white);display:block;margin-bottom:3px}
+.ttbl tbody tr:hover .t-title{color:var(--steam)}
+.t-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:2px}
+.cat-pill{font-size:11px;font-weight:600;padding:2px 8px;border-radius:3px}
+.tstat{font-size:13px;color:var(--text2);text-align:center}
+
+/* POSTS */
+.post{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:18px 22px;margin-bottom:6px}
+.post-hd{display:flex;align-items:flex-start;gap:11px;margin-bottom:12px}
+.post-av{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--border);flex-shrink:0;cursor:pointer}
+.post-av-sm{width:24px;height:24px;border-width:1px}
+.post-name{font-weight:600;font-size:13px;color:var(--white);display:flex;align-items:center;gap:6px;cursor:pointer}
+.post-date{font-size:11px;color:var(--text2);margin-top:1px}
+.post-body{font-size:14px;color:var(--text);line-height:1.8;white-space:pre-wrap;word-break:break-word}
+.post-img{max-width:100%;max-height:380px;border-radius:6px;margin-top:12px;border:1px solid var(--border);display:block}
+.post-foot{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:11px;border-top:1px solid var(--border)}
+.like-btn{background:transparent;border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
+.like-btn:hover,.like-btn.on{background:rgba(224,82,82,.1);border-color:rgba(224,82,82,.3);color:var(--red)}
 
 /* FORMS */
-.fg{margin-bottom:15px}
-.flabel{display:block;font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
-.finput,.ftextarea,.fselect{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--white);padding:9px 12px;transition:border-color .15s;outline:none}
-.finput:focus,.ftextarea:focus,.fselect:focus{border-color:var(--steam)}
-.ftextarea{resize:vertical;min-height:110px}
-.fselect option{background:var(--bg2)}
+.fg{margin-bottom:14px}
+.fl{display:block;font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.fi,.fta,.fsel{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);color:var(--white);padding:9px 12px;outline:none;transition:border-color .15s}
+.fi:focus,.fta:focus,.fsel:focus{border-color:var(--steam)}
+.fta{resize:vertical;min-height:110px}
+.fsel option{background:var(--bg2)}
 .fhint{font-size:11px;color:var(--text2);margin-top:4px}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
-/* MODAL */
+/* MODALS */
 .overlay{position:fixed;inset:0;background:rgba(10,15,20,.85);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
 .overlay.open{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border);border-radius:8px;width:100%;max-width:500px;overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
-.modal-hd{padding:17px 21px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:8px;width:100%;max-width:500px;max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+.modal-hd{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .modal-hd h3{font-weight:700;font-size:15px;color:var(--white)}
-.mclose{background:transparent;border:none;color:var(--text2);font-size:20px;line-height:1;cursor:pointer;padding:2px 6px;border-radius:var(--radius)}.mclose:hover{color:var(--white);background:var(--bg3)}
-.modal-bd{padding:21px;overflow-y:auto;flex:1}
-.modal-ft{padding:13px 21px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0}
-.tag-wrap{display:flex;flex-wrap:wrap;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:6px 8px;cursor:text;min-height:40px;align-items:center}
-.tag-wrap:focus-within{border-color:var(--steam)}
-.tag-chip{background:var(--bg3);color:var(--text);font-size:11px;padding:2px 8px;border-radius:3px;display:flex;align-items:center;gap:4px}
-.tag-chip button{background:transparent;border:none;color:var(--text2);font-size:13px;line-height:1;cursor:pointer;padding:0 1px}.tag-chip button:hover{color:var(--white)}
-.tag-wrap input{border:none;background:transparent;outline:none;color:var(--white);font-size:13px;font-family:"Poppins",sans-serif;flex:1;min-width:80px}
+.modal-x{background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer;padding:0 4px;border-radius:var(--r)}
+.modal-x:hover{color:var(--white);background:var(--bg3)}
+.modal-bd{padding:20px;overflow-y:auto;flex:1}
+.modal-ft{padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0}
+
+/* TAGS INPUT */
+.tagwrap{display:flex;flex-wrap:wrap;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:6px 8px;min-height:40px;align-items:center;cursor:text}
+.tagwrap:focus-within{border-color:var(--steam)}
+.tagchip{background:var(--bg3);color:var(--text);font-size:11px;padding:2px 8px;border-radius:3px;display:flex;align-items:center;gap:4px}
+.tagchip button{background:none;border:none;color:var(--text2);font-size:13px;cursor:pointer;padding:0 1px;line-height:1}
+.tagwrap input{border:none;background:transparent;outline:none;color:var(--white);font-size:13px;font-family:"Poppins",sans-serif;flex:1;min-width:80px}
+
+/* ALERTS */
+.alert{padding:10px 14px;border-radius:var(--r);font-size:13px;margin-bottom:12px}
+.a-warn{background:rgba(224,82,82,.08);border:1px solid rgba(224,82,82,.2);color:var(--red)}
+.a-info{background:rgba(76,158,222,.08);border:1px solid rgba(76,158,222,.2);color:var(--steam)}
+.a-ok{background:rgba(76,175,138,.08);border:1px solid rgba(76,175,138,.2);color:var(--green)}
 
 /* ADMIN */
-.admin-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:22px}
-.atab{background:transparent;border:none;color:var(--text2);font-weight:600;font-size:13px;padding:10px 18px;border-bottom:2px solid transparent;cursor:pointer;transition:all .15s;margin-bottom:-1px}
-.atab.active,.atab:hover{color:var(--white)}.atab.active{border-bottom-color:var(--steam)}
+.atabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:20px}
+.atab{background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);font-weight:600;font-size:13px;padding:10px 18px;cursor:pointer;margin-bottom:-1px;transition:all .15s}
+.atab.on,.atab:hover{color:var(--white)}.atab.on{border-bottom-color:var(--steam)}
 .atable{width:100%;border-collapse:collapse}
 .atable th{padding:9px 13px;text-align:left;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.7px;border-bottom:1px solid var(--border)}
 .atable td{padding:10px 13px;border-bottom:1px solid rgba(42,58,71,.4);font-size:13px;vertical-align:middle}
 .atable tr:last-child td{border-bottom:none}
 
 /* PROFILE */
-.profile-hero{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:28px 24px;margin-bottom:20px;display:flex;align-items:flex-start;gap:20px}
-.profile-info{flex:1}
-.profile-name{font-weight:900;font-size:20px;color:var(--white);margin-bottom:4px;display:flex;align-items:center;gap:8px}
-.profile-meta{font-size:12px;color:var(--text2);margin-bottom:10px}
+.profile-box{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:26px 22px;margin-bottom:18px;display:flex;align-items:flex-start;gap:18px}
+.profile-av{width:76px;height:76px;border-radius:50%;object-fit:cover;border:2px solid var(--border);flex-shrink:0}
+.profile-name{font-weight:900;font-size:20px;color:var(--white);display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.profile-meta{font-size:12px;color:var(--text2);margin-bottom:8px}
 .profile-bio{font-size:13px;color:var(--text);line-height:1.7}
 
 /* MISC */
-.alert{padding:11px 15px;border-radius:var(--radius);font-size:13px;margin-bottom:14px;display:flex;align-items:flex-start;gap:8px}
-.alert-info{background:rgba(76,158,222,.08);border:1px solid rgba(76,158,222,.2);color:var(--steam)}
-.alert-warn{background:rgba(224,82,82,.08);border:1px solid rgba(224,82,82,.2);color:var(--red)}
-.alert-success{background:rgba(76,175,138,.08);border:1px solid rgba(76,175,138,.2);color:var(--green)}
-.empty{text-align:center;padding:44px 24px;color:var(--text2);font-size:13px}
-.empty-icon{font-size:34px;margin-bottom:10px;opacity:.4}
-.loading{text-align:center;padding:36px;color:var(--text2);font-size:13px}
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(76,158,222,.3);border-top-color:var(--steam);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(76,158,222,.3);border-top-color:var(--steam);border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.loading{text-align:center;padding:40px;color:var(--text2)}
+.empty{text-align:center;padding:40px;color:var(--text2);font-size:13px}
 .hidden{display:none!important}
-.divider{height:1px;background:var(--border);margin:16px 0}
-.img-preview{max-width:100%;max-height:200px;border-radius:6px;margin-top:8px;border:1px solid var(--border);display:block}
-footer{background:var(--steam-dk);border-top:1px solid #243342;padding:20px;margin-top:60px}
-.footer-inner{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.footer-logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:13px;color:var(--white);text-decoration:none}
-.footer-logo img{width:19px;height:19px}
-.flogo-text{display:flex;align-items:baseline}
-.flogo-text .nx{color:var(--white)}.flogo-text .st{color:var(--steam)}
-.footer-links{display:flex;gap:16px;margin-left:auto}
-.footer-links a{font-size:12px;color:var(--text2)}.footer-links a:hover{color:var(--white)}
-.footer-copy{font-size:11px;color:var(--text2);width:100%;margin-top:5px}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:12px;flex-wrap:wrap}
+.breadcrumb a{color:var(--text2)}.breadcrumb a:hover{color:var(--white)}
 .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
-.toggle-row label{font-size:13px;color:var(--text);font-weight:500}
-.toggle{position:relative;display:inline-block;width:38px;height:20px}
-.toggle input{opacity:0;width:0;height:0}
-.toggle-slider{position:absolute;cursor:pointer;inset:0;background:var(--border);border-radius:20px;transition:.2s}
-.toggle-slider:before{position:absolute;content:"";height:14px;width:14px;left:3px;bottom:3px;background:var(--text2);border-radius:50%;transition:.2s}
-input:checked+.toggle-slider{background:var(--steam)}
-input:checked+.toggle-slider:before{transform:translateX(18px);background:#fff}
+.toggle-row label:first-child{font-size:13px;color:var(--text);font-weight:500}
+.tog{position:relative;display:inline-block;width:38px;height:20px}
+.tog input{opacity:0;width:0;height:0}
+.tog-sl{position:absolute;cursor:pointer;inset:0;background:var(--border);border-radius:20px;transition:.2s}
+.tog-sl:before{position:absolute;content:"";height:14px;width:14px;left:3px;bottom:3px;background:var(--text2);border-radius:50%;transition:.2s}
+input:checked+.tog-sl{background:var(--steam)}
+input:checked+.tog-sl:before{transform:translateX(18px);background:#fff}
+img-prev{display:block;max-width:100%;max-height:200px;border-radius:6px;margin-top:8px;border:1px solid var(--border)}
+footer{background:var(--steam-dk);border-top:1px solid #243342;padding:18px 20px;margin-top:60px}
+.footer-in{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.flogo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:13px;cursor:pointer}
+.flogo img{width:19px;height:19px}
+.flogo b{color:var(--white)}.flogo span{color:var(--steam)}
+.flinks{margin-left:auto;display:flex;gap:16px}
+.flinks a{font-size:12px;color:var(--text2)}.flinks a:hover{color:var(--white)}
+.fcopy{font-size:11px;color:var(--text2);width:100%;margin-top:4px}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo" onclick="navigateTo('home');return false">
-    <img src="logo-dark.png" alt="NextStats"/>
-    <span class="nav-logo-text"><span class="nx">Next</span><span class="st">Stats</span></span>
-  </a>
-  <div class="nav-sep"></div>
-  <span class="nav-community">Community</span>
-  <div class="nav-right" id="nav-right">
-    <span class="spinner"></span>
+  <div class="logo" onclick="go('home')">
+    <img src="logo-dark.png" alt="NextStats" onerror="this.style.display='none'"/>
+    <span class="logo-text"><b>Next</b><span>Stats</span></span>
   </div>
+  <div class="nav-divider"></div>
+  <span class="nav-lbl">Community</span>
+  <div class="nav-right" id="nav-r"><span class="spin"></span></div>
 </nav>
 
-<!-- APP -->
-<div id="app"></div>
+<div id="app"><div class="loading"><span class="spin"></span></div></div>
 
-<!-- ── LOGIN MODAL ── -->
+<!-- LOGIN -->
 <div class="overlay" id="m-login">
   <div class="modal">
-    <div class="modal-hd"><h3>Sign in</h3><button class="mclose" onclick="closeM('m-login')">×</button></div>
+    <div class="modal-hd"><h3>Sign in</h3><button class="modal-x" onclick="closeM('m-login')">×</button></div>
     <div class="modal-bd" style="text-align:center">
-      <div style="font-size:38px;margin-bottom:10px">💬</div>
-      <p style="color:var(--text2);margin-bottom:20px;font-size:13px">Sign in with your Google account to post, reply, and like discussions.</p>
-      <div id="login-err" class="alert alert-warn hidden" style="text-align:left"></div>
-      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:11px;gap:10px" onclick="signInGoogle()">
+      <div style="font-size:36px;margin-bottom:10px">💬</div>
+      <p style="color:var(--text2);margin-bottom:18px;font-size:13px">Sign in with Google to post, reply, and like discussions.</p>
+      <div id="login-err" class="alert a-warn hidden"></div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:11px;gap:10px" onclick="doLogin()">
         <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18L12.048 13.56C11.242 14.1 10.211 14.42 9 14.42c-2.392 0-4.416-1.614-5.14-3.786H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.86 10.634A5.278 5.278 0 0 1 3.583 9c0-.563.097-1.11.277-1.634V5.034H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.034l2.903-2.4z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 5.034l2.903 2.332C4.584 5.194 6.608 3.58 9 3.58z"/></svg>
         Continue with Google
       </button>
-      <p style="font-size:11px;color:var(--text2);margin-top:16px">Your email is verified automatically via Google.</p>
     </div>
   </div>
 </div>
 
-<!-- ── NEW TOPIC MODAL ── -->
-<div class="overlay" id="m-newtopic">
-  <div class="modal" style="max-width:580px">
-    <div class="modal-hd"><h3>New Topic</h3><button class="mclose" onclick="closeM('m-newtopic')">×</button></div>
+<!-- NEW TOPIC -->
+<div class="overlay" id="m-topic">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-hd"><h3>New Topic</h3><button class="modal-x" onclick="closeM('m-topic')">×</button></div>
     <div class="modal-bd">
-      <div class="fg">
-        <label class="flabel">Title *</label>
-        <input type="text" id="nt-title" class="finput" placeholder="Brief, clear title…" maxlength="120"/>
-      </div>
-      <div class="frow">
-        <div class="fg">
-          <label class="flabel">Channel *</label>
-          <select id="nt-channel" class="fselect" onchange="checkAdminOnly()"></select>
-          <div id="nt-adminonly-warn" class="alert alert-warn hidden" style="margin-top:8px;margin-bottom:0">🔒 This channel is for admins only.</div>
-        </div>
-        <div class="fg">
-          <label class="flabel">Tags <span style="text-transform:none;font-weight:400">(optional)</span></label>
-          <div class="tag-wrap" id="tag-wrap">
-            <input type="text" id="tag-raw" placeholder="Add tag…" onkeydown="handleTagKey(event)"/>
-          </div>
+      <div class="fg"><label class="fl">Title *</label><input type="text" id="nt-title" class="fi" placeholder="Brief, clear title…" maxlength="120"/></div>
+      <div class="f2">
+        <div class="fg"><label class="fl">Channel *</label><select id="nt-ch" class="fsel" onchange="onChChange()"></select></div>
+        <div class="fg"><label class="fl">Tags</label>
+          <div class="tagwrap" id="tagwrap"><input type="text" id="taginput" placeholder="Add tag, Enter…" onkeydown="tagKey(event)"/></div>
         </div>
       </div>
+      <div id="nt-lock" class="alert a-warn hidden">🔒 This channel is for admins only.</div>
+      <div class="fg"><label class="fl">Description *</label><textarea id="nt-body" class="fta" style="min-height:140px" placeholder="Describe the issue or idea…"></textarea></div>
       <div class="fg">
-        <label class="flabel">Description *</label>
-        <textarea id="nt-body" class="ftextarea" placeholder="Describe the issue or idea in detail…" style="min-height:150px"></textarea>
+        <label class="fl">Image URL <span style="font-weight:400;text-transform:none">(verified users only)</span></label>
+        <input type="url" id="nt-img" class="fi" placeholder="https://i.imgur.com/…" oninput="imgPrev(this,'nt-prev')"/>
+        <img id="nt-prev" class="hidden" style="max-width:100%;max-height:180px;border-radius:6px;margin-top:8px;border:1px solid var(--border)"/>
       </div>
-      <div class="fg">
-        <label class="flabel">Image URL <span style="text-transform:none;font-weight:400">(optional)</span></label>
-        <input type="url" id="nt-img" class="finput" placeholder="https://i.imgur.com/…" oninput="previewImg('nt-img','nt-img-preview')"/>
-        <img id="nt-img-preview" class="img-preview hidden"/>
-        <div class="fhint">Paste a direct image link (Imgur, etc). Only verified users can attach images.</div>
-      </div>
-      <div id="nt-err" class="alert alert-warn hidden"></div>
+      <div id="nt-err" class="alert a-warn hidden"></div>
     </div>
     <div class="modal-ft">
-      <button class="btn btn-ghost" onclick="closeM('m-newtopic')">Cancel</button>
-      <button class="btn btn-primary" onclick="submitNewTopic()">Post Topic</button>
+      <button class="btn btn-ghost" onclick="closeM('m-topic')">Cancel</button>
+      <button class="btn btn-primary" id="nt-submit" onclick="submitTopic()">Post Topic</button>
     </div>
   </div>
 </div>
 
-<!-- ── CHANNEL MODAL ── -->
-<div class="overlay" id="m-channel">
+<!-- CHANNEL EDIT -->
+<div class="overlay" id="m-ch">
   <div class="modal">
-    <div class="modal-hd"><h3 id="ch-modal-title">New Channel</h3><button class="mclose" onclick="closeM('m-channel')">×</button></div>
+    <div class="modal-hd"><h3 id="ch-title">New Channel</h3><button class="modal-x" onclick="closeM('m-ch')">×</button></div>
     <div class="modal-bd">
-      <div class="fg"><label class="flabel">Name</label><input type="text" id="ch-name" class="finput" placeholder="e.g. Bug Reports"/></div>
-      <div class="fg"><label class="flabel">Description</label><input type="text" id="ch-desc" class="finput" placeholder="Short description"/></div>
-      <div class="frow">
-        <div class="fg"><label class="flabel">Color</label><input type="color" id="ch-color" value="#4c9ede" style="width:100%;height:40px;border-radius:4px;border:1px solid var(--border);background:var(--bg);cursor:pointer;padding:2px"/></div>
-        <div class="fg"><label class="flabel">Order</label><input type="number" id="ch-order" class="finput" value="0" min="0"/></div>
+      <div class="fg"><label class="fl">Name</label><input type="text" id="ch-name" class="fi" placeholder="e.g. Bug Reports"/></div>
+      <div class="fg"><label class="fl">Description</label><input type="text" id="ch-desc" class="fi" placeholder="Short description"/></div>
+      <div class="f2">
+        <div class="fg"><label class="fl">Color</label><input type="color" id="ch-color" value="#4c9ede" style="width:100%;height:40px;border-radius:4px;border:1px solid var(--border);background:var(--bg);cursor:pointer;padding:2px"/></div>
+        <div class="fg"><label class="fl">Order</label><input type="number" id="ch-ord" class="fi" value="0" min="0"/></div>
       </div>
-      <div class="toggle-row">
-        <label for="ch-adminonly">🔒 Admin-only posting</label>
-        <label class="toggle"><input type="checkbox" id="ch-adminonly"/><span class="toggle-slider"></span></label>
-      </div>
-      <div id="ch-err" class="alert alert-warn hidden"></div>
+      <div class="toggle-row"><label for="ch-lock">🔒 Admin-only posting</label><label class="tog"><input type="checkbox" id="ch-lock"/><span class="tog-sl"></span></label></div>
+      <div id="ch-err" class="alert a-warn hidden"></div>
     </div>
     <div class="modal-ft">
-      <button class="btn btn-ghost" onclick="closeM('m-channel')">Cancel</button>
-      <button class="btn btn-primary" id="ch-submit" onclick="submitChannel()">Create</button>
+      <button class="btn btn-ghost" onclick="closeM('m-ch')">Cancel</button>
+      <button class="btn btn-primary" id="ch-submit" onclick="saveChannel()">Create</button>
     </div>
   </div>
 </div>
 
-<!-- ── PROFILE SETTINGS MODAL ── -->
-<div class="overlay" id="m-settings">
+<!-- SETTINGS -->
+<div class="overlay" id="m-set">
   <div class="modal">
-    <div class="modal-hd"><h3>Profile Settings</h3><button class="mclose" onclick="closeM('m-settings')">×</button></div>
+    <div class="modal-hd"><h3>Profile Settings</h3><button class="modal-x" onclick="closeM('m-set')">×</button></div>
     <div class="modal-bd">
-      <div style="text-align:center;margin-bottom:20px">
-        <img id="settings-photo-preview" class="avatar-xl" style="margin:0 auto 10px;display:block" src=""/>
-      </div>
-      <div class="fg">
-        <label class="flabel">Display Name</label>
-        <input type="text" id="set-name" class="finput" placeholder="Your name" maxlength="40"/>
-      </div>
-      <div class="fg">
-        <label class="flabel">Photo URL</label>
-        <input type="url" id="set-photo" class="finput" placeholder="https://…" oninput="document.getElementById('settings-photo-preview').src=this.value||currentUser?.photoURL||''"/>
-        <div class="fhint">Paste a direct image link for your profile picture.</div>
-      </div>
-      <div class="fg">
-        <label class="flabel">Bio</label>
-        <textarea id="set-bio" class="ftextarea" placeholder="Tell the community a bit about yourself…" style="min-height:80px" maxlength="200"></textarea>
-        <div class="fhint">Max 200 characters.</div>
-      </div>
-      <div id="set-err" class="alert alert-warn hidden"></div>
-      <div id="set-ok" class="alert alert-success hidden">✓ Profile updated!</div>
+      <div style="text-align:center;margin-bottom:16px"><img id="set-preview" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid var(--border)" src=""/></div>
+      <div class="fg"><label class="fl">Display Name</label><input type="text" id="set-name" class="fi" maxlength="40"/></div>
+      <div class="fg"><label class="fl">Photo URL</label><input type="url" id="set-photo" class="fi" oninput="document.getElementById('set-preview').src=this.value"/><div class="fhint">Paste a direct image link.</div></div>
+      <div class="fg"><label class="fl">Bio</label><textarea id="set-bio" class="fta" style="min-height:80px" maxlength="200"></textarea></div>
+      <div id="set-err" class="alert a-warn hidden"></div>
+      <div id="set-ok" class="alert a-ok hidden">✓ Profile updated!</div>
     </div>
     <div class="modal-ft">
-      <button class="btn btn-ghost" onclick="closeM('m-settings')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+      <button class="btn btn-ghost" onclick="closeM('m-set')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveSettings()">Save</button>
     </div>
   </div>
 </div>
 
-<!-- ── CONFIRM MODAL ── -->
+<!-- CONFIRM -->
 <div class="overlay" id="m-confirm">
-  <div class="modal" style="max-width:380px">
-    <div class="modal-hd"><h3 id="confirm-title">Confirm</h3><button class="mclose" onclick="closeM('m-confirm')">×</button></div>
+  <div class="modal" style="max-width:360px">
+    <div class="modal-hd"><h3>Confirm</h3><button class="modal-x" onclick="closeM('m-confirm')">×</button></div>
     <div class="modal-bd"><p id="confirm-msg" style="color:var(--text);font-size:13px"></p></div>
     <div class="modal-ft">
       <button class="btn btn-ghost" onclick="closeM('m-confirm')">Cancel</button>
@@ -327,688 +300,640 @@ input:checked+.toggle-slider:before{transform:translateX(18px);background:#fff}
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <a href="/" class="footer-logo"><img src="logo-dark.png" alt=""/><span class="flogo-text"><span class="nx">Next</span><span class="st">Stats</span></span></a>
-    <div class="footer-links"><a href="https://nextstatsbot.github.io/nextstatsbot/privacy.html" target="_blank">Privacy Policy</a><a href="https://nextstatsbot.github.io/nextstatsbot/terms.html" target="_blank">Terms of Use</a></div>
-    <div class="footer-copy">NextStats Community · Not affiliated with Valve, Steam or Epic Games.</div>
+  <div class="footer-in">
+    <div class="flogo" onclick="go('home')"><img src="logo-dark.png" alt="" onerror="this.style.display='none'"/><b>Next</b><span>Stats</span></div>
+    <div class="flinks">
+      <a href="https://nextstatsbot.github.io/nextstatsbot/privacy.html" target="_blank">Privacy Policy</a>
+      <a href="https://nextstatsbot.github.io/nextstatsbot/terms.html" target="_blank">Terms of Use</a>
+    </div>
+    <div class="fcopy">NextStats Community · Not affiliated with Valve, Steam or Epic Games.</div>
   </div>
 </footer>
 
-<!-- FIREBASE -->
 <script type="module">
-import { initializeApp }        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, updateProfile }
-                                 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, doc, addDoc, setDoc, getDoc, getDocs, updateDoc, deleteDoc,
-         query, where, orderBy, limit, serverTimestamp, increment, arrayUnion, arrayRemove }
-                                 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,signOut,onAuthStateChanged,updateProfile}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{getFirestore,collection,doc,addDoc,setDoc,getDoc,getDocs,updateDoc,deleteDoc,query,where,orderBy,limit,serverTimestamp,increment,arrayUnion,arrayRemove}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ─── FIREBASE CONFIG ────────────────────────────────────────
-const FIREBASE_CONFIG = {
-  apiKey:            "AIzaSyBAoRBkeRIqENIazgn1msR1f6iFOrNqHX0",
-  authDomain:        "nextstatsblog.firebaseapp.com",
-  databaseURL:       "https://nextstatsblog-default-rtdb.firebaseio.com",
-  projectId:         "nextstatsblog",
-  storageBucket:     "nextstatsblog.firebasestorage.app",
-  messagingSenderId: "322308456139",
-  appId:             "1:322308456139:web:b713e421b90a679c3de54e"
-};
+// ── CONFIG ──────────────────────────────────────────────────
+const app = initializeApp({
+  apiKey:"AIzaSyBAoRBkeRIqENIazgn1msR1f6iFOrNqHX0",
+  authDomain:"nextstatsblog.firebaseapp.com",
+  databaseURL:"https://nextstatsblog-default-rtdb.firebaseio.com",
+  projectId:"nextstatsblog",
+  storageBucket:"nextstatsblog.firebasestorage.app",
+  messagingSenderId:"322308456139",
+  appId:"1:322308456139:web:b713e421b90a679c3de54e"
+});
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const gpro = new GoogleAuthProvider();
 
-const fbApp  = initializeApp(FIREBASE_CONFIG);
-const auth   = getAuth(fbApp);
-const db     = getFirestore(fbApp);
-const gprov  = new GoogleAuthProvider();
+// ── STATE ────────────────────────────────────────────────────
+let CU=null, UD=null, isAdmin=false;
+let channels=[], tags=[], editChId=null;
+let view="home", viewParam=null;
 
-// ─── STATE ──────────────────────────────────────────────────
-let CU       = null;  // currentUser (firebase auth)
-let UD       = null;  // userDoc (firestore)
-let isAdmin  = false;
-let channels = [];
-let activeTags = [];
-let editChId = null;
-let _currentView = "home";
-let _currentParam = null;
-
-// ─── AUTH ────────────────────────────────────────────────────
-window.signInGoogle = async () => {
-  const errEl = document.getElementById("login-err");
-  errEl.classList.add("hidden");
-  try {
-    await signInWithPopup(auth, gprov);
-  } catch(e) {
-    if(e.code==="auth/popup-blocked"||e.code==="auth/popup-closed-by-user"||e.code==="auth/cancelled-popup-request"){
-      await signInWithRedirect(auth, gprov);
+// ── AUTH ─────────────────────────────────────────────────────
+window.doLogin = async()=>{
+  const e=document.getElementById("login-err");
+  e.classList.add("hidden");
+  try{ await signInWithPopup(auth,gpro); }
+  catch(err){
+    if(err.code==="auth/popup-blocked"||err.code==="auth/popup-closed-by-user"||err.code==="auth/cancelled-popup-request"){
+      await signInWithRedirect(auth,gpro);
     } else {
-      errEl.textContent = e.code==="auth/unauthorized-domain"
-        ? "⚠ Domain not authorized. Add your domain in Firebase Console → Authentication → Settings → Authorized domains."
-        : "Login error: "+(e.message||e.code);
-      errEl.classList.remove("hidden");
+      e.textContent = err.code==="auth/unauthorized-domain"
+        ? "⚠ Add your domain in Firebase Console → Authentication → Settings → Authorized domains."
+        : "Error: "+err.message;
+      e.classList.remove("hidden");
     }
   }
 };
-window.signOutUser = () => signOut(auth);
+window.doLogout=()=>signOut(auth);
 getRedirectResult(auth).catch(()=>{});
 
-onAuthStateChanged(auth, async user => {
-  CU = user;
+onAuthStateChanged(auth, async user=>{
+  CU=user;
   if(user){
     closeM("m-login");
-    const uRef = doc(db,"users",user.uid);
-    const uSnap = await getDoc(uRef);
-    if(!uSnap.exists()){
-      await setDoc(uRef,{uid:user.uid,name:user.displayName||"",email:user.email||"",photo:user.photoURL||"",bio:"",isAdmin:false,isVerified:false,joinedAt:serverTimestamp()});
-    } else {
-      // sync photo/name if not customized
-    }
-    UD = (await getDoc(uRef)).data();
-    isAdmin = UD?.isAdmin||false;
+    try{
+      const ref=doc(db,"users",user.uid);
+      const snap=await getDoc(ref);
+      if(!snap.exists()){
+        await setDoc(ref,{uid:user.uid,name:user.displayName||"",email:user.email||"",photo:user.photoURL||"",bio:"",isAdmin:false,isVerified:false,joinedAt:serverTimestamp()});
+      }
+      UD=(await getDoc(ref)).data();
+      isAdmin=!!UD?.isAdmin;
+    } catch(e){ console.error("user doc error",e); }
   } else { UD=null; isAdmin=false; }
   renderNav();
-  nav(null, null);  // re-render current view
+  // don't re-render page, just update nav
 });
 
-// ─── NAVIGATION ──────────────────────────────────────────────
-window.navigateTo = nav;
-function nav(view, param){
-  if(view){ _currentView=view; _currentParam=param; }
-  else { view=_currentView; param=_currentParam; }
-  window.scrollTo({top:0,behavior:"smooth"});
-  switch(view){
-    case "home":     renderHome(); break;
-    case "channel":  renderChannel(param); break;
-    case "topic":    renderTopic(param); break;
-    case "profile":  renderProfile(param); break;
-    case "admin":    renderAdmin(); break;
-    default:         renderHome();
-  }
-}
-
-// ─── NAV RENDER ──────────────────────────────────────────────
+// ── NAV ──────────────────────────────────────────────────────
 function renderNav(){
-  const el = document.getElementById("nav-right");
+  const el=document.getElementById("nav-r");
   if(!CU){
-    el.innerHTML = `<button class="btn btn-primary" onclick="openM('m-login')">Sign in with Google</button>`;
+    el.innerHTML=`<button class="btn btn-primary" onclick="openM('m-login')">Sign in with Google</button>`;
     return;
   }
-  const uPhoto = (UD?.photo||CU.photoURL)||`https://ui-avatars.com/api/?name=${encodeURIComponent(UD?.name||CU.displayName||"U")}&background=1b2838&color=4c9ede`;
-  el.innerHTML = `
+  const ph=UD?.photo||CU.photoURL||avatar(UD?.name||CU.displayName);
+  el.innerHTML=`
     <button class="btn btn-primary btn-sm" onclick="openNewTopic()">+ New Topic</button>
-    ${isAdmin?`<button class="btn btn-ghost btn-sm" onclick="navigateTo('admin',null)">⚙ Admin</button>`:""}
-    <div class="user-menu">
-      <img class="avatar" src="${uPhoto}" alt="" onerror="this.src='https://ui-avatars.com/api/?name=U&background=1b2838&color=4c9ede'"/>
-      <div class="user-dropdown">
+    ${isAdmin?`<button class="btn btn-ghost btn-sm" onclick="go('admin')">⚙ Admin</button>`:""}
+    <div class="umenu">
+      <img class="uavatar" src="${ph}" onerror="this.src='${avatar(UD?.name||CU.displayName)}'"/>
+      <div class="udrop">
         <div style="padding:8px 10px 6px;border-bottom:1px solid var(--border);margin-bottom:4px">
           <div style="font-weight:700;font-size:13px;color:var(--white)">${esc(UD?.name||CU.displayName||"User")}</div>
           <div style="font-size:11px;color:var(--text2)">${esc(CU.email||"")}</div>
-          <div style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap">
-            ${isAdmin?`<span class="badge badge-admin">👑 Admin</span>`:""}
-            ${UD?.isVerified?`<span class="badge badge-verified">✓ Verified</span>`:""}
+          <div style="margin-top:5px;display:flex;gap:4px;flex-wrap:wrap">
+            ${isAdmin?`<span class="badge b-admin">👑 Admin</span>`:""}
+            ${UD?.isVerified?`<span class="badge b-verified">✓ Verified</span>`:""}
           </div>
         </div>
-        <a href="#" onclick="navigateTo('profile','${CU.uid}');return false">👤 My Profile</a>
+        <a href="#" onclick="go('profile','${CU.uid}');return false">👤 My Profile</a>
         <button onclick="openSettings()">⚙ Settings</button>
-        <div class="dd-divider"></div>
-        <button onclick="signOutUser()">🚪 Sign out</button>
+        <hr/><button onclick="doLogout()">🚪 Sign out</button>
       </div>
     </div>`;
 }
 
-// ─── CHANNELS ────────────────────────────────────────────────
+// ── CHANNELS ─────────────────────────────────────────────────
 async function loadChannels(){
-  const snap = await getDocs(query(collection(db,"channels"),orderBy("order","asc")));
-  channels = snap.docs.map(d=>({id:d.id,...d.data()}));
-  return channels;
+  try{
+    const snap=await getDocs(query(collection(db,"channels"),orderBy("order","asc")));
+    channels=snap.docs.map(d=>({id:d.id,...d.data()}));
+  } catch(e){ channels=[]; console.error("channels error",e); }
 }
-function getCh(id){ return channels.find(c=>c.id===id)||{name:id,color:"#7a94a8",adminOnly:false}; }
-function chBadge(ch){ if(!ch)return""; return `<span class="cat-badge" style="background:${ch.color}22;color:${ch.color}">${esc(ch.name)}</span>`; }
-function adminOnlyBadge(ch){ return ch?.adminOnly?`<span class="badge badge-adminonly" style="font-size:10px">🔒 Admin</span>`:""; }
+const getCh=id=>channels.find(c=>c.id===id)||{name:id||"?",color:"#7a94a8",adminOnly:false};
+const chPill=ch=>`<span class="cat-pill" style="background:${ch.color}22;color:${ch.color}">${esc(ch.name)}</span>`;
 
-function sidebarHTML(){
+function sidebar(){
   return `<div class="sidebar">
-    <div class="scard"><div class="scard-hd">Channels</div><div class="scard-bd">
-      <ul class="ch-nav">
-        <li><a href="#" onclick="navigateTo('home',null);return false" class="${_currentView==='home'?'active':''}">
-          <span class="ch-dot" style="background:var(--steam)"></span> All Topics
-        </a></li>
-        ${channels.map(c=>`<li><a href="#" onclick="navigateTo('channel','${c.id}');return false" class="${_currentView==='channel'&&_currentParam===c.id?'active':''}">
-          <span class="ch-dot" style="background:${c.color}"></span> ${esc(c.name)}
-          ${c.adminOnly?`<span style="font-size:10px;color:var(--yellow);margin-left:auto">🔒</span>`:""}
-        </a></li>`).join("")}
-      </ul>
-    </div></div>
-    <div class="scard"><div class="scard-hd">Links</div><div class="scard-bd">
-      <ul class="ch-nav">
-        <li><a href="https://nextstatsbot.github.io/nextstatsbot/" target="_blank">🤖 NextStats Discord Bot</a></li>
-      </ul>
-    </div></div>
+    <div class="scard">
+      <div class="scard-title">Channels</div>
+      <div class="scard-body">
+        <ul class="chnav">
+          <li><a href="#" onclick="go('home');return false" class="${view==='home'?'active':''}">
+            <span class="chdot" style="background:var(--steam)"></span>All Topics
+          </a></li>
+          ${channels.map(c=>`<li><a href="#" onclick="go('channel','${c.id}');return false" class="${view==='channel'&&viewParam===c.id?'active':''}">
+            <span class="chdot" style="background:${c.color}"></span>${esc(c.name)}
+            ${c.adminOnly?`<span style="font-size:10px;color:var(--yellow);margin-left:auto">🔒</span>`:""}
+          </a></li>`).join("")}
+        </ul>
+      </div>
+    </div>
+    <div class="scard">
+      <div class="scard-title">Links</div>
+      <div class="scard-body">
+        <ul class="chnav">
+          <li><a href="https://nextstatsbot.github.io/nextstatsbot/" target="_blank">🤖 NextStats Discord Bot</a></li>
+        </ul>
+      </div>
+    </div>
   </div>`;
 }
 
-function injectSidebar(){
-  const slot = document.getElementById("sidebar-slot");
-  if(slot) slot.outerHTML = sidebarHTML();
+function layout(main){
+  return `<div class="wrap"><div id="main-col">${main}</div>${sidebar()}</div>`;
 }
 
-// ─── HOME ────────────────────────────────────────────────────
+// ── NAV/GO ───────────────────────────────────────────────────
+window.go=(v,p)=>{
+  view=v; viewParam=p||null;
+  window.scrollTo({top:0,behavior:"smooth"});
+  render();
+};
+
+async function render(){
+  if(view==="home")    return renderHome();
+  if(view==="channel") return renderChannel(viewParam);
+  if(view==="topic")   return renderTopic(viewParam);
+  if(view==="profile") return renderProfile(viewParam);
+  if(view==="admin")   return renderAdmin();
+  renderHome();
+}
+
+// ── HOME ─────────────────────────────────────────────────────
 async function renderHome(){
-  const app = document.getElementById("app");
-  app.innerHTML = `<div class="phdr"><div class="phdr-inner"><div><h1>Community Forum</h1><p>Report bugs, suggest features, and discuss NextStats.</p></div><button class="btn btn-primary" onclick="openNewTopic()">+ New Topic</button></div></div>
-  <div class="layout"><div id="main-col"><div class="loading"><span class="spinner"></span></div></div><div id="sidebar-slot"></div></div>`;
+  const el=document.getElementById("app");
+  el.innerHTML=`<div class="phdr"><div class="phdr-inner"><div><h1>Community Forum</h1><p>Report bugs, suggest features, discuss NextStats.</p></div><button class="btn btn-primary" onclick="openNewTopic()">+ New Topic</button></div></div>
+  <div class="wrap"><div id="main-col"><div class="loading"><span class="spin"></span></div></div><div id="sb"></div></div>`;
   await loadChannels();
-  injectSidebar();
-  const col = document.getElementById("main-col");
+  const sb=document.getElementById("sb");
+  if(sb) sb.outerHTML=sidebar();
+  const col=document.getElementById("main-col");
   try{
-    const snap = await getDocs(query(collection(db,"topics"),orderBy("createdAt","desc"),limit(60)));
-    const topics = snap.docs.map(d=>({id:d.id,...d.data()}));
-    if(!topics.length){ col.innerHTML=`<div class="card"><div class="empty"><div class="empty-icon">💬</div>No topics yet. Be the first to post!</div></div>`; return; }
-    col.innerHTML = `<div class="card"><div class="card-hd"><h2>Recent Discussions</h2></div><table class="ttable"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Views</th><th>Activity</th></tr></thead><tbody>${topics.map(topicRow).join("")}</tbody></table></div>`;
-  } catch(e){ col.innerHTML=`<div class="card"><div class="empty">Error loading topics: ${esc(e.message)}</div></div>`; }
+    const snap=await getDocs(query(collection(db,"topics"),orderBy("createdAt","desc"),limit(60)));
+    const topics=snap.docs.map(d=>({id:d.id,...d.data()}));
+    if(!topics.length){col.innerHTML=`<div class="card"><div class="empty">No topics yet — be the first to post!</div></div>`;return;}
+    col.innerHTML=`<div class="card"><div class="card-head"><h2>Recent Discussions</h2></div>
+    <table class="ttbl"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Views</th><th>Activity</th></tr></thead>
+    <tbody>${topics.map(tRow).join("")}</tbody></table></div>`;
+  } catch(e){col.innerHTML=`<div class="card"><div class="empty">Error: ${esc(e.message)}</div></div>`;}
 }
 
-// ─── CHANNEL ─────────────────────────────────────────────────
+// ── CHANNEL ──────────────────────────────────────────────────
 async function renderChannel(chId){
-  const app = document.getElementById("app");
+  const el=document.getElementById("app");
   await loadChannels();
-  const ch = getCh(chId);
-  app.innerHTML = `<div class="phdr"><div class="phdr-inner"><div><h1>${esc(ch.name)} ${adminOnlyBadge(ch)}</h1><p>${esc(ch.description||"")}</p></div><button class="btn btn-primary" onclick="openNewTopic('${chId}')">+ New Topic</button></div></div>
-  <div class="layout"><div id="main-col"><div class="loading"><span class="spinner"></span></div></div><div id="sidebar-slot"></div></div>`;
-  injectSidebar();
-  const col = document.getElementById("main-col");
+  const ch=getCh(chId);
+  el.innerHTML=`<div class="phdr"><div class="phdr-inner"><div><h1>${esc(ch.name)}</h1><p>${esc(ch.description||"")}</p></div><button class="btn btn-primary" onclick="openNewTopic('${chId}')">+ New Topic</button></div></div>
+  <div class="wrap"><div id="main-col"><div class="loading"><span class="spin"></span></div></div><div id="sb"></div></div>`;
+  const sb=document.getElementById("sb");
+  if(sb) sb.outerHTML=sidebar();
+  const col=document.getElementById("main-col");
   try{
-    // Sem orderBy duplo para evitar exigência de índice composto
-    const snap = await getDocs(query(collection(db,"topics"),where("channelId","==",chId),orderBy("createdAt","desc")));
-    let topics = snap.docs.map(d=>({id:d.id,...d.data()}));
-    // Pinned primeiro (client-side sort)
+    const snap=await getDocs(query(collection(db,"topics"),where("channelId","==",chId),orderBy("createdAt","desc")));
+    let topics=snap.docs.map(d=>({id:d.id,...d.data()}));
     topics.sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0));
-    if(!topics.length){ col.innerHTML=`<div class="card"><div class="empty"><div class="empty-icon">💬</div>No topics in this channel yet.</div></div>`; return; }
-    col.innerHTML = `<div class="card"><div class="card-hd"><h2>${esc(ch.name)}</h2></div><table class="ttable"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Views</th><th>Activity</th></tr></thead><tbody>${topics.map(topicRow).join("")}</tbody></table></div>`;
-  } catch(e){ col.innerHTML=`<div class="card"><div class="empty">Error loading topics: ${esc(e.message)}</div></div>`; }
+    if(!topics.length){col.innerHTML=`<div class="card"><div class="empty">No topics in this channel yet.</div></div>`;return;}
+    col.innerHTML=`<div class="card"><div class="card-head"><h2>${esc(ch.name)}</h2></div>
+    <table class="ttbl"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Views</th><th>Activity</th></tr></thead>
+    <tbody>${topics.map(tRow).join("")}</tbody></table></div>`;
+  } catch(e){col.innerHTML=`<div class="card"><div class="empty">Error: ${esc(e.message)}</div></div>`;}
 }
 
-function topicRow(t){
-  const ch = getCh(t.channelId);
-  const tags = (t.tags||[]).map(tg=>`<span class="tag">${esc(tg)}</span>`).join("");
-  const pin = t.pinned?`<span style="color:var(--yellow);margin-right:4px">📌</span>`:"";
-  return `<tr onclick="navigateTo('topic','${t.id}')">
-    <td><span class="t-title">${pin}${esc(t.title)}</span><div class="t-meta">${chBadge(ch)}${tags}</div></td>
-    <td class="t-stat">${t.replyCount||0}</td>
-    <td class="t-stat">❤ ${(t.likedBy||[]).length||0}</td>
-    <td class="t-stat">${t.viewCount||0}</td>
-    <td class="t-stat" style="font-size:12px;white-space:nowrap">${timeAgo(t.updatedAt?.toDate?.())}</td>
+function tRow(t){
+  const ch=getCh(t.channelId);
+  const tgs=(t.tags||[]).map(g=>`<span class="b-tag">${esc(g)}</span>`).join("");
+  const pin=t.pinned?`<span style="color:var(--yellow);margin-right:4px">📌</span>`:"";
+  return `<tr onclick="go('topic','${t.id}')">
+    <td><span class="t-title">${pin}${esc(t.title)}</span><div class="t-meta">${chPill(ch)}${tgs}</div></td>
+    <td class="tstat">${t.replyCount||0}</td>
+    <td class="tstat">❤ ${(t.likedBy||[]).length}</td>
+    <td class="tstat">${t.viewCount||0}</td>
+    <td class="tstat" style="font-size:12px;white-space:nowrap">${ago(t.updatedAt?.toDate?.())}</td>
   </tr>`;
 }
 
-// ─── TOPIC ───────────────────────────────────────────────────
-async function renderTopic(topicId){
-  const app = document.getElementById("app");
+// ── TOPIC ────────────────────────────────────────────────────
+async function renderTopic(tid){
+  const el=document.getElementById("app");
   await loadChannels();
-  app.innerHTML = `<div class="phdr"><div class="phdr-inner"><div class="breadcrumb"><a href="#" onclick="navigateTo('home',null);return false">Home</a><span>›</span><span>Topic</span></div></div></div>
-  <div class="layout"><div id="main-col"><div class="loading"><span class="spinner"></span></div></div><div id="sidebar-slot"></div></div>`;
-  injectSidebar();
-
-  await updateDoc(doc(db,"topics",topicId),{viewCount:increment(1)}).catch(()=>{});
-  const tSnap = await getDoc(doc(db,"topics",topicId));
-  if(!tSnap.exists()){ document.getElementById("main-col").innerHTML=`<div class="empty">Topic not found.</div>`; return; }
-  const t = {id:tSnap.id,...tSnap.data()};
-  const ch = getCh(t.channelId);
-  const tags = (t.tags||[]).map(tg=>`<span class="tag">${esc(tg)}</span>`).join("");
-  const liked = CU && (t.likedBy||[]).includes(CU.uid);
-  const likeCount = (t.likedBy||[]).length||0;
-
-  const rSnap = await getDocs(query(collection(db,"topics",topicId,"replies"),orderBy("createdAt","asc")));
-  const replies = rSnap.docs.map(d=>({id:d.id,...d.data()}));
-
-  const adminBtns = isAdmin ? `
-    <button class="btn btn-ghost btn-sm" onclick="togglePin('${topicId}',${t.pinned||false})">${t.pinned?"📌 Unpin":"📌 Pin"}</button>
-    <button class="btn btn-danger btn-sm" onclick="confirmDel('topic','${topicId}')">🗑 Delete</button>` : "";
-
-  const authorPhoto = getPhoto(t.authorPhoto, t.authorName);
-  const authorUD = await getUserDoc(t.authorId);
-
-  const replySection = CU
-    ? `<div class="reply-form" id="reply-form">
-        <h3 style="font-weight:700;font-size:14px;color:var(--white);margin-bottom:14px">Leave a Reply</h3>
-        <div class="fg"><textarea id="reply-body" class="ftextarea" placeholder="Write your reply…" style="min-height:90px"></textarea></div>
-        <div id="reply-err" class="alert alert-warn hidden"></div>
-        <button class="btn btn-primary" onclick="submitReply('${topicId}')">Post Reply</button>
-      </div>`
-    : `<div class="alert alert-info">💬 <a href="#" onclick="openM('m-login');return false">Sign in</a> to reply to this discussion.</div>`;
-
-  document.getElementById("main-col").innerHTML = `
-    <div class="topic-hero">
-      <div class="t-meta">${chBadge(ch)}${tags}${t.pinned?`<span style="color:var(--yellow)">📌 Pinned</span>`:""}</div>
-      <h1>${esc(t.title)}</h1>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <img class="avatar avatar-sm" src="${authorPhoto}" style="cursor:pointer" onclick="navigateTo('profile','${t.authorId}')"/>
-        <span style="font-size:13px;color:var(--text2);cursor:pointer" onclick="navigateTo('profile','${t.authorId}')">${esc(t.authorName||"Unknown")}</span>
-        ${authorUD?.isVerified?`<span class="badge badge-verified">✓ Verified</span>`:""}
-        ${authorUD?.isAdmin?`<span class="badge badge-admin">👑 Admin</span>`:""}
-        <span style="font-size:12px;color:var(--text2)">· ${timeAgo(t.createdAt?.toDate?.())}</span>
-        <div style="margin-left:auto;display:flex;gap:6px">${adminBtns}</div>
-      </div>
-    </div>
-    <div class="post-card">
-      <div class="post-header">
-        <img class="avatar avatar-lg" src="${authorPhoto}" style="cursor:pointer" onclick="navigateTo('profile','${t.authorId}')"/>
-        <div class="post-author-info">
-          <div class="pname" style="cursor:pointer" onclick="navigateTo('profile','${t.authorId}')">
-            ${esc(t.authorName||"Unknown")}
-            ${authorUD?.isVerified?`<span class="badge badge-verified">✓ Verified</span>`:""}
-            ${authorUD?.isAdmin?`<span class="badge badge-admin">👑</span>`:""}
-          </div>
-          <div class="pdate">${t.createdAt?.toDate?.()?.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})||""}</div>
+  el.innerHTML=`<div class="phdr"><div class="phdr-inner"><div class="breadcrumb"><a href="#" onclick="go('home');return false">Home</a><span>›</span><span>Topic</span></div></div></div>
+  <div class="wrap"><div id="main-col"><div class="loading"><span class="spin"></span></div></div><div id="sb"></div></div>`;
+  const sb=document.getElementById("sb");
+  if(sb) sb.outerHTML=sidebar();
+  const col=document.getElementById("main-col");
+  try{
+    await updateDoc(doc(db,"topics",tid),{viewCount:increment(1)}).catch(()=>{});
+    const tSnap=await getDoc(doc(db,"topics",tid));
+    if(!tSnap.exists()){col.innerHTML=`<div class="empty">Topic not found.</div>`;return;}
+    const t={id:tSnap.id,...tSnap.data()};
+    const ch=getCh(t.channelId);
+    const liked=!!(CU&&(t.likedBy||[]).includes(CU.uid));
+    const lc=(t.likedBy||[]).length;
+    const tgs=(t.tags||[]).map(g=>`<span class="b-tag">${esc(g)}</span>`).join("");
+    const uD=await getUD(t.authorId);
+    const ph=getPhoto(t.authorPhoto,t.authorName);
+    const rSnap=await getDocs(query(collection(db,"topics",tid,"replies"),orderBy("createdAt","asc")));
+    const replies=rSnap.docs.map(d=>({id:d.id,...d.data()}));
+    const admBtns=isAdmin?`
+      <button class="btn btn-ghost btn-sm" onclick="pinTopic('${tid}',${!!t.pinned})">${t.pinned?"Unpin":"📌 Pin"}</button>
+      <button class="btn btn-danger btn-sm" onclick="askDel('topic','${tid}')">🗑 Delete</button>`:"";
+    const replyForm=CU
+      ?`<div class="post" id="reply-form">
+          <h3 style="font-weight:700;font-size:14px;color:var(--white);margin-bottom:12px">Leave a Reply</h3>
+          <div class="fg"><textarea id="rb" class="fta" style="min-height:90px" placeholder="Write your reply…"></textarea></div>
+          <div id="re" class="alert a-warn hidden"></div>
+          <button class="btn btn-primary" onclick="postReply('${tid}')">Post Reply</button>
+        </div>`
+      :`<div class="alert a-info">💬 <a href="#" onclick="openM('m-login');return false">Sign in</a> to reply to this discussion.</div>`;
+    col.innerHTML=`
+      <div class="post">
+        <div class="t-meta" style="margin-bottom:8px">${chPill(ch)}${tgs}${t.pinned?`<span style="color:var(--yellow)">📌 Pinned</span>`:""}</div>
+        <h1 style="font-weight:900;font-size:clamp(15px,2.5vw,21px);color:var(--white);margin-bottom:10px">${esc(t.title)}</h1>
+        <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+          <img class="post-av post-av-sm" src="${ph}" onclick="go('profile','${t.authorId}')" onerror="this.src='${avatar(t.authorName)}'"/>
+          <span style="font-size:13px;color:var(--text2);cursor:pointer" onclick="go('profile','${t.authorId}')">${esc(t.authorName||"?")}</span>
+          ${uD?.isVerified?`<span class="badge b-verified">✓ Verified</span>`:""}
+          ${uD?.isAdmin?`<span class="badge b-admin">👑 Admin</span>`:""}
+          <span style="font-size:12px;color:var(--text2)">· ${ago(t.createdAt?.toDate?.())}</span>
+          <div style="margin-left:auto;display:flex;gap:6px">${admBtns}</div>
         </div>
       </div>
-      <div class="post-body">${esc(t.body||"")}</div>
-      ${t.imageUrl?`<img src="${esc(t.imageUrl)}" class="post-img" alt="Post image" onerror="this.style.display='none'"/>`:""}
-      <div class="post-footer">
-        <button class="btn-like ${liked?'liked':''}" onclick="toggleLike('${topicId}','${liked}')">
-          ❤ <span id="like-count">${likeCount}</span> ${likeCount===1?"Like":"Likes"}
-        </button>
-        <span style="margin-left:auto;font-size:12px;color:var(--text2)">${t.viewCount||0} views</span>
+      <div class="post">
+        <div class="post-hd">
+          <img class="post-av" src="${ph}" onclick="go('profile','${t.authorId}')" onerror="this.src='${avatar(t.authorName)}'"/>
+          <div>
+            <div class="post-name" onclick="go('profile','${t.authorId}')">
+              ${esc(t.authorName||"?")}
+              ${uD?.isVerified?`<span class="badge b-verified">✓ Verified</span>`:""}
+              ${uD?.isAdmin?`<span class="badge b-admin">👑</span>`:""}
+            </div>
+            <div class="post-date">${t.createdAt?.toDate?.()?.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})||""}</div>
+          </div>
+        </div>
+        <div class="post-body">${esc(t.body||"")}</div>
+        ${t.imageUrl?`<img src="${esc(t.imageUrl)}" class="post-img" onerror="this.style.display='none'"/>`:""}
+        <div class="post-foot">
+          <button class="like-btn ${liked?"on":""}" onclick="toggleLike('${tid}',${liked})">❤ <span id="lc">${lc}</span> ${lc===1?"Like":"Likes"}</button>
+          <span style="margin-left:auto;font-size:12px;color:var(--text2)">${t.viewCount||0} views</span>
+        </div>
       </div>
-    </div>
-    ${replies.map(r=>replyCardHTML(r,topicId)).join("")}
-    ${replySection}`;
+      ${replies.map(r=>replyCard(r,tid)).join("")}
+      ${replyForm}`;
+  } catch(e){col.innerHTML=`<div class="empty">Error loading topic: ${esc(e.message)}</div>`;}
 }
 
-async function getUserDoc(uid){
-  if(!uid) return null;
-  try{ const s=await getDoc(doc(db,"users",uid)); return s.exists()?s.data():null; } catch{ return null; }
-}
-
-function replyCardHTML(r, topicId){
-  const photo = getPhoto(r.authorPhoto, r.authorName);
-  const delBtn = (isAdmin || (CU && CU.uid===r.authorId))
-    ? `<button class="btn btn-danger btn-sm" onclick="confirmDel('reply','${r.id}','${topicId}')">🗑 Delete</button>` : "";
-  return `<div class="post-card" id="reply-${r.id}">
-    <div class="post-header">
-      <img class="avatar avatar-lg" src="${photo}" style="cursor:pointer" onclick="navigateTo('profile','${r.authorId}')"/>
-      <div class="post-author-info">
-        <div class="pname" style="cursor:pointer" onclick="navigateTo('profile','${r.authorId}')">${esc(r.authorName||"Unknown")}</div>
-        <div class="pdate">${r.createdAt?.toDate?.()?.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})||""}</div>
+function replyCard(r,tid){
+  const ph=getPhoto(r.authorPhoto,r.authorName);
+  const del=(isAdmin||(CU&&CU.uid===r.authorId))
+    ?`<button class="btn btn-danger btn-sm" onclick="askDel('reply','${r.id}','${tid}')">🗑</button>`:"";
+  return `<div class="post" id="rep-${r.id}">
+    <div class="post-hd">
+      <img class="post-av" src="${ph}" onclick="go('profile','${r.authorId}')" onerror="this.src='${avatar(r.authorName)}'"/>
+      <div style="flex:1">
+        <div class="post-name" onclick="go('profile','${r.authorId}')">${esc(r.authorName||"?")}</div>
+        <div class="post-date">${r.createdAt?.toDate?.()?.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})||""}</div>
       </div>
-      <div style="margin-left:auto">${delBtn}</div>
+      <div>${del}</div>
     </div>
     <div class="post-body">${esc(r.body||"")}</div>
-    ${r.imageUrl?`<img src="${esc(r.imageUrl)}" class="post-img" alt="" onerror="this.style.display='none'"/>`:""}
   </div>`;
 }
 
-window.toggleLike = async (topicId, wasLiked) => {
-  if(!CU){ openM("m-login"); return; }
-  const tRef = doc(db,"topics",topicId);
-  if(wasLiked==="true"){
-    await updateDoc(tRef,{likedBy:arrayRemove(CU.uid)});
-  } else {
-    await updateDoc(tRef,{likedBy:arrayUnion(CU.uid)});
-  }
-  renderTopic(topicId);
+window.toggleLike=async(tid,liked)=>{
+  if(!CU){openM("m-login");return;}
+  const ref=doc(db,"topics",tid);
+  await updateDoc(ref,{likedBy:liked?arrayRemove(CU.uid):arrayUnion(CU.uid)});
+  renderTopic(tid);
 };
 
-window.submitReply = async (topicId) => {
-  if(!CU){ openM("m-login"); return; }
-  const body = document.getElementById("reply-body").value.trim();
-  const err  = document.getElementById("reply-err");
+window.pinTopic=async(tid,pinned)=>{
+  await updateDoc(doc(db,"topics",tid),{pinned:!pinned});
+  renderTopic(tid);
+};
+
+window.postReply=async(tid)=>{
+  if(!CU){openM("m-login");return;}
+  const body=document.getElementById("rb").value.trim();
+  const err=document.getElementById("re");
   err.classList.add("hidden");
-  if(!body){ err.textContent="Reply cannot be empty."; err.classList.remove("hidden"); return; }
-  const btn = document.querySelector("#reply-form .btn-primary");
-  btn.disabled=true; btn.textContent="Posting…";
+  if(!body){err.textContent="Reply cannot be empty.";err.classList.remove("hidden");return;}
+  const btn=document.querySelector("#reply-form .btn-primary");
+  btn.disabled=true;btn.textContent="Posting…";
   try{
-    await addDoc(collection(db,"topics",topicId,"replies"),{
-      body, authorId:CU.uid, authorName:UD?.name||CU.displayName||"",
-      authorPhoto:UD?.photo||CU.photoURL||"", createdAt:serverTimestamp()
+    await addDoc(collection(db,"topics",tid,"replies"),{
+      body,authorId:CU.uid,authorName:UD?.name||CU.displayName||"",
+      authorPhoto:UD?.photo||CU.photoURL||"",createdAt:serverTimestamp()
     });
-    await updateDoc(doc(db,"topics",topicId),{replyCount:increment(1),updatedAt:serverTimestamp()});
-    renderTopic(topicId);
-  } catch(e){ err.textContent="Failed: "+e.message; err.classList.remove("hidden"); btn.disabled=false; btn.textContent="Post Reply"; }
+    await updateDoc(doc(db,"topics",tid),{replyCount:increment(1),updatedAt:serverTimestamp()});
+    renderTopic(tid);
+  } catch(e){err.textContent="Failed: "+e.message;err.classList.remove("hidden");btn.disabled=false;btn.textContent="Post Reply";}
 };
 
-window.togglePin = async (topicId, pinned) => {
-  await updateDoc(doc(db,"topics",topicId),{pinned:!pinned});
-  renderTopic(topicId);
-};
-
-// ─── PROFILE ─────────────────────────────────────────────────
+// ── PROFILE ──────────────────────────────────────────────────
 async function renderProfile(uid){
-  const app = document.getElementById("app");
-  app.innerHTML = `<div class="phdr"><div class="phdr-inner"><div class="breadcrumb"><a href="#" onclick="navigateTo('home',null);return false">Home</a><span>›</span><span>Profile</span></div></div></div>
-  <div class="layout"><div id="main-col"><div class="loading"><span class="spinner"></span></div></div><div id="sidebar-slot"></div></div>`;
+  const el=document.getElementById("app");
   await loadChannels();
-  injectSidebar();
-  const col = document.getElementById("main-col");
+  el.innerHTML=`<div class="phdr"><div class="phdr-inner"><div class="breadcrumb"><a href="#" onclick="go('home');return false">Home</a><span>›</span><span>Profile</span></div></div></div>
+  <div class="wrap"><div id="main-col"><div class="loading"><span class="spin"></span></div></div><div id="sb"></div></div>`;
+  const sb=document.getElementById("sb");
+  if(sb) sb.outerHTML=sidebar();
+  const col=document.getElementById("main-col");
   try{
-    const uSnap = await getDoc(doc(db,"users",uid));
-    if(!uSnap.exists()){ col.innerHTML=`<div class="empty">User not found.</div>`; return; }
-    const u = uSnap.data();
-    const photo = getPhoto(u.photo||u.photoURL, u.name);
-    const isOwn = CU && CU.uid===uid;
-    // Query simples sem índice composto
-    const tSnap = await getDocs(query(collection(db,"topics"),where("authorId","==",uid),orderBy("createdAt","desc"),limit(20)));
-    const topics = tSnap.docs.map(d=>({id:d.id,...d.data()}));
-    col.innerHTML = `
-      <div class="profile-hero">
-        <img class="avatar-xl" src="${photo}" style="border-radius:50%;border:2px solid var(--border);flex-shrink:0" onerror="this.src='https://ui-avatars.com/api/?name=U&background=1b2838&color=4c9ede'"/>
-        <div class="profile-info">
+    const uSnap=await getDoc(doc(db,"users",uid));
+    if(!uSnap.exists()){col.innerHTML=`<div class="empty">User not found.</div>`;return;}
+    const u=uSnap.data();
+    const ph=getPhoto(u.photo||u.photoURL,u.name);
+    const isOwn=CU&&CU.uid===uid;
+    const snap=await getDocs(query(collection(db,"topics"),where("authorId","==",uid),orderBy("createdAt","desc"),limit(20)));
+    const topics=snap.docs.map(d=>({id:d.id,...d.data()}));
+    col.innerHTML=`
+      <div class="profile-box">
+        <img class="profile-av" src="${ph}" onerror="this.src='${avatar(u.name)}'"/>
+        <div style="flex:1">
           <div class="profile-name">
             ${esc(u.name||"Unknown")}
-            ${u.isVerified?`<span class="badge badge-verified">✓ Verified</span>`:""}
-            ${u.isAdmin?`<span class="badge badge-admin">👑 Admin</span>`:""}
+            ${u.isVerified?`<span class="badge b-verified">✓ Verified</span>`:""}
+            ${u.isAdmin?`<span class="badge b-admin">👑 Admin</span>`:""}
           </div>
-          <div class="profile-meta">Joined ${u.joinedAt?.toDate?.()?.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})||"—"} · ${topics.length} topics posted</div>
+          <div class="profile-meta">Joined ${u.joinedAt?.toDate?.()?.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})||"—"} · ${topics.length} topics</div>
           <div class="profile-bio">${esc(u.bio||"No bio yet.")}</div>
           ${isOwn?`<button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="openSettings()">⚙ Edit Profile</button>`:""}
         </div>
       </div>
       <div class="card">
-        <div class="card-hd"><h2>Topics by ${esc(u.name||"this user")}</h2></div>
-        ${topics.length
-          ? `<table class="ttable"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Activity</th></tr></thead><tbody>${topics.map(t=>{
-              const ch=getCh(t.channelId);
-              return `<tr onclick="navigateTo('topic','${t.id}')" style="cursor:pointer"><td><span class="t-title">${esc(t.title)}</span><div class="t-meta">${chBadge(ch)}</div></td><td class="t-stat">${t.replyCount||0}</td><td class="t-stat">❤ ${(t.likedBy||[]).length||0}</td><td class="t-stat" style="font-size:12px">${timeAgo(t.createdAt?.toDate?.())}</td></tr>`;
-            }).join("")}</tbody></table>`
-          : `<div class="empty">No topics posted yet.</div>`}
+        <div class="card-head"><h2>Topics by ${esc(u.name||"this user")}</h2></div>
+        ${topics.length?`<table class="ttbl"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Activity</th></tr></thead><tbody>
+          ${topics.map(t=>{const ch=getCh(t.channelId);return `<tr onclick="go('topic','${t.id}')" style="cursor:pointer">
+            <td><span class="t-title">${esc(t.title)}</span><div class="t-meta">${chPill(ch)}</div></td>
+            <td class="tstat">${t.replyCount||0}</td>
+            <td class="tstat">❤ ${(t.likedBy||[]).length}</td>
+            <td class="tstat" style="font-size:12px">${ago(t.createdAt?.toDate?.())}</td>
+          </tr>`;}).join("")}</tbody></table>`
+        :`<div class="empty">No topics posted yet.</div>`}
       </div>`;
-  } catch(e){ col.innerHTML=`<div class="empty">Error loading profile: ${esc(e.message)}</div>`; }
+  } catch(e){col.innerHTML=`<div class="empty">Error loading profile: ${esc(e.message)}</div>`;}
 }
 
-// ─── PROFILE SETTINGS ────────────────────────────────────────
-window.openSettings = () => {
-  if(!CU){ openM("m-login"); return; }
-  document.getElementById("set-name").value  = UD?.name||CU.displayName||"";
-  document.getElementById("set-photo").value = UD?.photo||CU.photoURL||"";
-  document.getElementById("set-bio").value   = UD?.bio||"";
-  document.getElementById("settings-photo-preview").src = UD?.photo||CU.photoURL||"";
+// ── SETTINGS ─────────────────────────────────────────────────
+window.openSettings=()=>{
+  if(!CU){openM("m-login");return;}
+  document.getElementById("set-name").value=UD?.name||CU.displayName||"";
+  document.getElementById("set-photo").value=UD?.photo||CU.photoURL||"";
+  document.getElementById("set-bio").value=UD?.bio||"";
+  document.getElementById("set-preview").src=UD?.photo||CU.photoURL||"";
   document.getElementById("set-err").classList.add("hidden");
   document.getElementById("set-ok").classList.add("hidden");
-  openM("m-settings");
+  openM("m-set");
 };
-
-window.saveSettings = async () => {
-  const name  = document.getElementById("set-name").value.trim();
-  const photo = document.getElementById("set-photo").value.trim();
-  const bio   = document.getElementById("set-bio").value.trim();
-  const err   = document.getElementById("set-err");
-  const ok    = document.getElementById("set-ok");
-  err.classList.add("hidden"); ok.classList.add("hidden");
-  if(!name){ err.textContent="Name cannot be empty."; err.classList.remove("hidden"); return; }
-  try{
-    await updateDoc(doc(db,"users",CU.uid),{name, photo: photo||UD?.photo||"", bio});
-    await updateProfile(CU,{displayName:name, photoURL:photo||CU.photoURL||""});
-    UD = {...UD, name, photo:photo||UD?.photo||"", bio};
-    ok.classList.remove("hidden");
-    renderNav();
-  } catch(e){ err.textContent="Error: "+e.message; err.classList.remove("hidden"); }
-};
-
-// ─── NEW TOPIC ────────────────────────────────────────────────
-window.openNewTopic = async (prefill) => {
-  if(!CU){ openM("m-login"); return; }
-  await loadChannels();
-  const sel = document.getElementById("nt-channel");
-  sel.innerHTML = channels.map(c=>`<option value="${c.id}">${c.name}${c.adminOnly?" 🔒":""}</option>`).join("");
-  if(prefill) sel.value=prefill;
-  activeTags=[]; renderTagChips();
-  document.getElementById("nt-title").value="";
-  document.getElementById("nt-body").value="";
-  document.getElementById("nt-img").value="";
-  document.getElementById("nt-img-preview").classList.add("hidden");
-  document.getElementById("nt-err").classList.add("hidden");
-  document.getElementById("nt-adminonly-warn").classList.add("hidden");
-  checkAdminOnly();
-  openM("m-newtopic");
-};
-
-window.checkAdminOnly = () => {
-  const sel = document.getElementById("nt-channel");
-  if(!sel) return;
-  const ch = getCh(sel.value);
-  const warn = document.getElementById("nt-adminonly-warn");
-  const imgGrp = document.getElementById("nt-img")?.closest(".fg");
-  if(ch?.adminOnly && !isAdmin){
-    warn.classList.remove("hidden");
-  } else {
-    warn.classList.add("hidden");
-  }
-};
-
-window.submitNewTopic = async () => {
-  if(!CU){ openM("m-login"); return; }
-  const title   = document.getElementById("nt-title").value.trim();
-  const body    = document.getElementById("nt-body").value.trim();
-  const chId    = document.getElementById("nt-channel").value;
-  const imgUrl  = document.getElementById("nt-img").value.trim();
-  const err     = document.getElementById("nt-err");
-  err.classList.add("hidden");
-  if(!title){ err.textContent="Title is required."; err.classList.remove("hidden"); return; }
-  if(!body){  err.textContent="Description is required."; err.classList.remove("hidden"); return; }
-  const ch = getCh(chId);
-  if(ch?.adminOnly && !isAdmin){ err.textContent="Only admins can post in this channel."; err.classList.remove("hidden"); return; }
-  if(imgUrl && !UD?.isVerified && !isAdmin){ err.textContent="Only verified users can attach images. Contact an admin to get verified."; err.classList.remove("hidden"); return; }
-  try{
-    const ref = await addDoc(collection(db,"topics"),{
-      title, body, channelId:chId, channelName:ch.name,
-      tags:activeTags, authorId:CU.uid,
-      authorName:UD?.name||CU.displayName||"",
-      authorPhoto:UD?.photo||CU.photoURL||"",
-      imageUrl:imgUrl||"",
-      likedBy:[], createdAt:serverTimestamp(), updatedAt:serverTimestamp(),
-      replyCount:0, viewCount:0, pinned:false
-    });
-    closeM("m-newtopic");
-    navigateTo("topic",ref.id);
-  } catch(e){ err.textContent="Failed: "+e.message; err.classList.remove("hidden"); }
-};
-
-// tag input
-window.handleTagKey = e => {
-  if(e.key==="Enter"||e.key===","){ e.preventDefault(); addTag(); }
-  if(e.key==="Backspace"&&e.target.value===""&&activeTags.length){ activeTags.pop(); renderTagChips(); }
-};
-function addTag(){ const i=document.getElementById("tag-raw"); const v=i.value.trim().toLowerCase().replace(/[^a-z0-9\-:]/g,""); if(v&&!activeTags.includes(v)&&activeTags.length<5){ activeTags.push(v); renderTagChips(); } i.value=""; }
-window.removeTag = t => { activeTags=activeTags.filter(x=>x!==t); renderTagChips(); };
-function renderTagChips(){ const w=document.getElementById("tag-wrap"); if(!w)return; w.innerHTML=activeTags.map(t=>`<span class="tag-chip">${t}<button onclick="removeTag('${t}')">×</button></span>`).join(""); w.insertAdjacentHTML("beforeend",`<input type="text" id="tag-raw" placeholder="${activeTags.length?"":"Add tag…"}" onkeydown="handleTagKey(event)"/>`); }
-
-// ─── IMAGE PREVIEW ────────────────────────────────────────────
-window.previewImg = (inputId, previewId) => {
-  const val = document.getElementById(inputId)?.value?.trim();
-  const prev = document.getElementById(previewId);
-  if(!prev) return;
-  if(val){ prev.src=val; prev.classList.remove("hidden"); prev.onerror=()=>prev.classList.add("hidden"); }
-  else prev.classList.add("hidden");
-};
-
-// ─── ADMIN ───────────────────────────────────────────────────
-async function renderAdmin(){
-  if(!isAdmin){ document.getElementById("app").innerHTML=`<div class="layout-full"><div class="empty">Access denied.</div></div>`; return; }
-  await loadChannels();
-  document.getElementById("app").innerHTML = `
-  <div class="phdr"><div class="phdr-inner"><div><h1>⚙ Admin Panel</h1><p>Manage channels, topics, and users.</p></div></div></div>
-  <div class="layout-full">
-    <div class="admin-tabs">
-      <button class="atab active" onclick="aTab('channels',this)">Channels</button>
-      <button class="atab" onclick="aTab('topics',this)">Topics</button>
-      <button class="atab" onclick="aTab('users',this)">Users</button>
-    </div>
-    <div id="admin-content"></div>
-  </div>`;
-  aTab("channels", document.querySelector(".atab"));
-}
-
-window.aTab = async (tab, btn) => {
-  document.querySelectorAll(".atab").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  const c = document.getElementById("admin-content");
-  c.innerHTML = `<div class="loading"><span class="spinner"></span></div>`;
-
-  if(tab==="channels"){
-    await loadChannels();
-    c.innerHTML = `<div style="display:flex;justify-content:flex-end;margin-bottom:14px"><button class="btn btn-primary" onclick="openChModal()">+ New Channel</button></div>
-    <div class="card"><table class="atable">
-      <thead><tr><th>Name</th><th>Description</th><th>Color</th><th>Admin Only</th><th>Actions</th></tr></thead>
-      <tbody>${channels.map(ch=>`<tr>
-        <td><strong style="color:var(--white)">${esc(ch.name)}</strong></td>
-        <td style="color:var(--text2)">${esc(ch.description||"")}</td>
-        <td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${ch.color};margin-right:6px"></span>${ch.color}</td>
-        <td>${ch.adminOnly?`<span class="badge badge-adminonly">🔒 Yes</span>`:`<span style="color:var(--text2)">No</span>`}</td>
-        <td><div style="display:flex;gap:6px">
-          <button class="btn btn-ghost btn-sm" onclick="openChModal('${ch.id}')">Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="confirmDel('channel','${ch.id}')">Delete</button>
-        </div></td>
-      </tr>`).join("")}${channels.length===0?`<tr><td colspan="5" class="empty">No channels.</td></tr>`:""}</tbody>
-    </table></div>`;
-  }
-
-  if(tab==="topics"){
-    const snap = await getDocs(query(collection(db,"topics"),orderBy("createdAt","desc"),limit(100)));
-    const topics = snap.docs.map(d=>({id:d.id,...d.data()}));
-    c.innerHTML = `<div class="card"><table class="atable">
-      <thead><tr><th>Title</th><th>Channel</th><th>Author</th><th>Replies</th><th>Likes</th><th>Actions</th></tr></thead>
-      <tbody>${topics.map(t=>{
-        const ch=getCh(t.channelId);
-        return `<tr>
-          <td><a href="#" onclick="navigateTo('topic','${t.id}');return false" style="color:var(--white);font-weight:600">${esc(t.title)}</a></td>
-          <td><span style="color:${ch.color}">${esc(ch.name)}</span></td>
-          <td style="color:var(--text2)">${esc(t.authorName||"?")}</td>
-          <td>${t.replyCount||0}</td>
-          <td>❤ ${(t.likedBy||[]).length||0}</td>
-          <td><div style="display:flex;gap:5px">
-            <button class="btn btn-ghost btn-sm" onclick="togglePin('${t.id}',${t.pinned||false})">${t.pinned?"Unpin":"📌 Pin"}</button>
-            <button class="btn btn-danger btn-sm" onclick="confirmDel('topic','${t.id}')">🗑 Delete</button>
-          </div></td>
-        </tr>`;}).join("")}
-      ${topics.length===0?`<tr><td colspan="6" class="empty">No topics.</td></tr>`:""}
-      </tbody></table></div>`;
-  }
-
-  if(tab==="users"){
-    const snap = await getDocs(query(collection(db,"users"),orderBy("joinedAt","desc")));
-    const users = snap.docs.map(d=>({id:d.id,...d.data()}));
-    c.innerHTML = `<div class="card"><table class="atable">
-      <thead><tr><th>User</th><th>Email</th><th>Joined</th><th>Roles</th><th>Actions</th></tr></thead>
-      <tbody>${users.map(u=>`<tr>
-        <td><div style="display:flex;align-items:center;gap:8px">
-          <img class="avatar avatar-sm" src="${getPhoto(u.photo||u.photoURL,u.name)}" onerror="this.src='https://ui-avatars.com/api/?name=U&background=1b2838&color=4c9ede'"/>
-          <span style="color:var(--white);font-weight:600;cursor:pointer" onclick="navigateTo('profile','${u.uid||u.id}')">${esc(u.name||"?")}</span>
-        </div></td>
-        <td style="color:var(--text2);font-size:12px">${esc(u.email||"")}</td>
-        <td style="color:var(--text2);font-size:12px">${u.joinedAt?.toDate?.()?.toLocaleDateString()||"—"}</td>
-        <td><div style="display:flex;gap:4px;flex-wrap:wrap">
-          ${u.isAdmin?`<span class="badge badge-admin">👑 Admin</span>`:""}
-          ${u.isVerified?`<span class="badge badge-verified">✓ Verified</span>`:""}
-        </div></td>
-        <td>${u.uid!==CU?.uid?`<div style="display:flex;gap:5px;flex-wrap:wrap">
-          <button class="btn ${u.isAdmin?"btn-danger":"btn-ghost"} btn-sm" onclick="toggleUserRole('${u.uid||u.id}','admin',${u.isAdmin||false})">${u.isAdmin?"Revoke Admin":"Make Admin"}</button>
-          <button class="btn ${u.isVerified?"btn-danger":"btn-purple"} btn-sm" onclick="toggleUserRole('${u.uid||u.id}','verified',${u.isVerified||false})">${u.isVerified?"Unverify":"✓ Verify"}</button>
-        </div>`:`<span style="color:var(--text2);font-size:12px">You</span>`}</td>
-      </tr>`).join("")}</tbody></table></div>`;
-  }
-};
-
-window.toggleUserRole = async (uid, role, current) => {
-  const field = role==="admin"?"isAdmin":"isVerified";
-  await updateDoc(doc(db,"users",uid),{[field]:!current});
-  aTab(document.querySelector(".atab.active").textContent.toLowerCase().trim(), document.querySelector(".atab.active"));
-};
-
-// ─── CHANNEL CRUD ─────────────────────────────────────────────
-window.openChModal = async (id) => {
-  editChId=id||null;
-  document.getElementById("ch-modal-title").textContent=id?"Edit Channel":"New Channel";
-  document.getElementById("ch-submit").textContent=id?"Save Changes":"Create";
-  document.getElementById("ch-err").classList.add("hidden");
-  if(id){
-    const snap=await getDoc(doc(db,"channels",id));
-    const d=snap.data()||{};
-    document.getElementById("ch-name").value=d.name||"";
-    document.getElementById("ch-desc").value=d.description||"";
-    document.getElementById("ch-color").value=d.color||"#4c9ede";
-    document.getElementById("ch-order").value=d.order||0;
-    document.getElementById("ch-adminonly").checked=d.adminOnly||false;
-  } else {
-    document.getElementById("ch-name").value="";
-    document.getElementById("ch-desc").value="";
-    document.getElementById("ch-color").value="#4c9ede";
-    document.getElementById("ch-order").value=channels.length;
-    document.getElementById("ch-adminonly").checked=false;
-  }
-  openM("m-channel");
-};
-
-window.submitChannel = async () => {
-  const name=document.getElementById("ch-name").value.trim();
-  const desc=document.getElementById("ch-desc").value.trim();
-  const color=document.getElementById("ch-color").value;
-  const order=parseInt(document.getElementById("ch-order").value)||0;
-  const adminOnly=document.getElementById("ch-adminonly").checked;
-  const err=document.getElementById("ch-err");
-  err.classList.add("hidden");
+window.saveSettings=async()=>{
+  const name=document.getElementById("set-name").value.trim();
+  const photo=document.getElementById("set-photo").value.trim();
+  const bio=document.getElementById("set-bio").value.trim();
+  const err=document.getElementById("set-err");
+  const ok=document.getElementById("set-ok");
+  err.classList.add("hidden");ok.classList.add("hidden");
   if(!name){err.textContent="Name is required.";err.classList.remove("hidden");return;}
   try{
-    if(editChId){ await updateDoc(doc(db,"channels",editChId),{name,description:desc,color,order,adminOnly}); }
-    else { await addDoc(collection(db,"channels"),{name,description:desc,color,order,adminOnly,createdAt:serverTimestamp()}); }
-    closeM("m-channel");
-    aTab("channels",document.querySelector(".atab.active"));
+    await updateDoc(doc(db,"users",CU.uid),{name,photo:photo||UD?.photo||"",bio});
+    await updateProfile(CU,{displayName:name,photoURL:photo||CU.photoURL||""});
+    UD={...UD,name,photo:photo||UD?.photo||"",bio};
+    ok.classList.remove("hidden");
+    renderNav();
   } catch(e){err.textContent="Error: "+e.message;err.classList.remove("hidden");}
 };
 
-// ─── DELETE ───────────────────────────────────────────────────
-let _del = null;
-window.confirmDel = (type, id, pid) => {
-  const msgs={topic:"Delete this topic and all its replies?",reply:"Delete this reply?",channel:"Delete this channel?"};
-  document.getElementById("confirm-title").textContent="Confirm Delete";
-  document.getElementById("confirm-msg").textContent=msgs[type]||"Are you sure?";
-  _del={type,id,pid};
-  openM("m-confirm");
-  document.getElementById("confirm-ok").onclick = execDel;
+// ── NEW TOPIC ─────────────────────────────────────────────────
+window.openNewTopic=async(prefill)=>{
+  if(!CU){openM("m-login");return;}
+  await loadChannels();
+  const sel=document.getElementById("nt-ch");
+  sel.innerHTML=channels.map(c=>`<option value="${c.id}">${c.name}${c.adminOnly?" 🔒":""}</option>`).join("");
+  if(prefill)sel.value=prefill;
+  tags=[];renderTags();
+  ["nt-title","nt-body","nt-img"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("nt-prev").classList.add("hidden");
+  document.getElementById("nt-err").classList.add("hidden");
+  document.getElementById("nt-lock").classList.add("hidden");
+  onChChange();
+  openM("m-topic");
 };
-async function execDel(){
-  if(!_del)return;
-  const{type,id,pid}=_del;
-  closeM("m-confirm");
+window.onChChange=()=>{
+  const sel=document.getElementById("nt-ch");
+  if(!sel)return;
+  const ch=getCh(sel.value);
+  document.getElementById("nt-lock").classList.toggle("hidden",!(ch?.adminOnly&&!isAdmin));
+};
+window.submitTopic=async()=>{
+  if(!CU){openM("m-login");return;}
+  const title=document.getElementById("nt-title").value.trim();
+  const body=document.getElementById("nt-body").value.trim();
+  const chId=document.getElementById("nt-ch").value;
+  const imgUrl=document.getElementById("nt-img").value.trim();
+  const err=document.getElementById("nt-err");
+  err.classList.add("hidden");
+  if(!title){err.textContent="Title is required.";err.classList.remove("hidden");return;}
+  if(!body){err.textContent="Description is required.";err.classList.remove("hidden");return;}
+  const ch=getCh(chId);
+  if(ch?.adminOnly&&!isAdmin){err.textContent="Only admins can post in this channel.";err.classList.remove("hidden");return;}
+  if(imgUrl&&!UD?.isVerified&&!isAdmin){err.textContent="Only verified users can attach images.";err.classList.remove("hidden");return;}
+  const btn=document.getElementById("nt-submit");
+  btn.disabled=true;btn.textContent="Posting…";
+  try{
+    const ref=await addDoc(collection(db,"topics"),{
+      title,body,channelId:chId,channelName:ch.name,tags,
+      authorId:CU.uid,authorName:UD?.name||CU.displayName||"",
+      authorPhoto:UD?.photo||CU.photoURL||"",
+      imageUrl:imgUrl||"",likedBy:[],
+      createdAt:serverTimestamp(),updatedAt:serverTimestamp(),
+      replyCount:0,viewCount:0,pinned:false
+    });
+    closeM("m-topic");
+    go("topic",ref.id);
+  } catch(e){err.textContent="Failed: "+e.message;err.classList.remove("hidden");}
+  btn.disabled=false;btn.textContent="Post Topic";
+};
+window.tagKey=e=>{
+  if(e.key==="Enter"||e.key===","){e.preventDefault();addTag();}
+  if(e.key==="Backspace"&&e.target.value===""&&tags.length){tags.pop();renderTags();}
+};
+function addTag(){const i=document.getElementById("taginput");const v=i.value.trim().toLowerCase().replace(/[^a-z0-9\-:]/g,"");if(v&&!tags.includes(v)&&tags.length<5){tags.push(v);renderTags();}i.value="";}
+window.rmTag=t=>{tags=tags.filter(x=>x!==t);renderTags();};
+function renderTags(){
+  const w=document.getElementById("tagwrap");if(!w)return;
+  w.innerHTML=tags.map(t=>`<span class="tagchip">${t}<button onclick="rmTag('${t}')">×</button></span>`).join("")+`<input type="text" id="taginput" placeholder="${tags.length?"":"Add tag…"}" onkeydown="tagKey(event)"/>`;
+}
+window.imgPrev=(inp,pid)=>{
+  const v=inp.value.trim();const p=document.getElementById(pid);if(!p)return;
+  if(v){p.src=v;p.classList.remove("hidden");p.onerror=()=>p.classList.add("hidden");}
+  else p.classList.add("hidden");
+};
+
+// ── ADMIN ─────────────────────────────────────────────────────
+async function renderAdmin(){
+  if(!isAdmin){document.getElementById("app").innerHTML=`<div class="wrap-full"><div class="empty">Access denied.</div></div>`;return;}
+  await loadChannels();
+  document.getElementById("app").innerHTML=`
+    <div class="phdr"><div class="phdr-inner"><div><h1>⚙ Admin Panel</h1></div></div></div>
+    <div class="wrap-full">
+      <div class="atabs">
+        <button class="atab on" onclick="aTab('channels',this)">Channels</button>
+        <button class="atab" onclick="aTab('topics',this)">Topics</button>
+        <button class="atab" onclick="aTab('users',this)">Users</button>
+      </div>
+      <div id="acontent"></div>
+    </div>`;
+  aTab("channels",document.querySelector(".atab"));
+}
+
+window.aTab=async(tab,btn)=>{
+  document.querySelectorAll(".atab").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");
+  const c=document.getElementById("acontent");
+  c.innerHTML=`<div class="loading"><span class="spin"></span></div>`;
+  if(tab==="channels"){
+    await loadChannels();
+    c.innerHTML=`<div style="display:flex;justify-content:flex-end;margin-bottom:14px"><button class="btn btn-primary" onclick="openChModal()">+ New Channel</button></div>
+    <div class="card"><table class="atable"><thead><tr><th>Name</th><th>Description</th><th>Color</th><th>Admin Only</th><th></th></tr></thead>
+    <tbody>${channels.map(ch=>`<tr>
+      <td><strong style="color:var(--white)">${esc(ch.name)}</strong></td>
+      <td style="color:var(--text2)">${esc(ch.description||"")}</td>
+      <td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${ch.color};margin-right:6px;vertical-align:middle"></span>${ch.color}</td>
+      <td>${ch.adminOnly?`<span class="badge b-locked">🔒 Yes</span>`:`<span style="color:var(--text2)">No</span>`}</td>
+      <td><div style="display:flex;gap:6px">
+        <button class="btn btn-ghost btn-sm" onclick="openChModal('${ch.id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="askDel('channel','${ch.id}')">Delete</button>
+      </div></td>
+    </tr>`).join("")}</tbody></table></div>`;
+  }
+  if(tab==="topics"){
+    try{
+      const snap=await getDocs(query(collection(db,"topics"),orderBy("createdAt","desc"),limit(100)));
+      const topics=snap.docs.map(d=>({id:d.id,...d.data()}));
+      c.innerHTML=`<div class="card"><table class="atable"><thead><tr><th>Title</th><th>Channel</th><th>Author</th><th>Replies</th><th></th></tr></thead>
+      <tbody>${topics.map(t=>{const ch=getCh(t.channelId);return`<tr>
+        <td><a href="#" onclick="go('topic','${t.id}');return false" style="color:var(--white);font-weight:600">${esc(t.title)}</a></td>
+        <td><span style="color:${ch.color}">${esc(ch.name)}</span></td>
+        <td style="color:var(--text2)">${esc(t.authorName||"?")}</td>
+        <td>${t.replyCount||0}</td>
+        <td><div style="display:flex;gap:6px">
+          <button class="btn btn-ghost btn-sm" onclick="pinTopic('${t.id}',${!!t.pinned})">${t.pinned?"Unpin":"📌 Pin"}</button>
+          <button class="btn btn-danger btn-sm" onclick="askDel('topic','${t.id}')">🗑 Delete</button>
+        </div></td>
+      </tr>`;}).join("")}</tbody></table></div>`;
+    } catch(e){c.innerHTML=`<div class="empty">Error: ${esc(e.message)}</div>`;}
+  }
+  if(tab==="users"){
+    try{
+      const snap=await getDocs(query(collection(db,"users"),orderBy("joinedAt","desc")));
+      const users=snap.docs.map(d=>({id:d.id,...d.data()}));
+      c.innerHTML=`<div class="card"><table class="atable"><thead><tr><th>User</th><th>Email</th><th>Roles</th><th>Actions</th></tr></thead>
+      <tbody>${users.map(u=>`<tr>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <img style="width:24px;height:24px;border-radius:50%;border:1px solid var(--border)" src="${getPhoto(u.photo||u.photoURL,u.name)}" onerror="this.src='${avatar(u.name)}'"/>
+          <span style="color:var(--white);font-weight:600;cursor:pointer" onclick="go('profile','${u.uid||u.id}')">${esc(u.name||"?")}</span>
+        </div></td>
+        <td style="color:var(--text2);font-size:12px">${esc(u.email||"")}</td>
+        <td><div style="display:flex;gap:4px;flex-wrap:wrap">
+          ${u.isAdmin?`<span class="badge b-admin">👑 Admin</span>`:""}
+          ${u.isVerified?`<span class="badge b-verified">✓ Verified</span>`:""}
+        </div></td>
+        <td>${(u.uid||u.id)!==CU?.uid?`<div style="display:flex;gap:5px;flex-wrap:wrap">
+          <button class="btn ${u.isAdmin?"btn-danger":"btn-ghost"} btn-sm" onclick="setRole('${u.uid||u.id}','isAdmin',${!!u.isAdmin})">${u.isAdmin?"Revoke Admin":"Make Admin"}</button>
+          <button class="btn ${u.isVerified?"btn-danger":"btn-purple"} btn-sm" onclick="setRole('${u.uid||u.id}','isVerified',${!!u.isVerified})">${u.isVerified?"Unverify":"✓ Verify"}</button>
+        </div>`:`<span style="color:var(--text2);font-size:12px">You</span>`}</td>
+      </tr>`).join("")}</tbody></table></div>`;
+    } catch(e){c.innerHTML=`<div class="empty">Error: ${esc(e.message)}</div>`;}
+  }
+};
+
+window.setRole=async(uid,field,cur)=>{
+  await updateDoc(doc(db,"users",uid),{[field]:!cur});
+  aTab(document.querySelector(".atab.on").textContent.trim().toLowerCase(),document.querySelector(".atab.on"));
+};
+
+window.openChModal=async(id)=>{
+  editChId=id||null;
+  document.getElementById("ch-title").textContent=id?"Edit Channel":"New Channel";
+  document.getElementById("ch-submit").textContent=id?"Save":"Create";
+  document.getElementById("ch-err").classList.add("hidden");
+  if(id){
+    const snap=await getDoc(doc(db,"channels",id));const d=snap.data()||{};
+    document.getElementById("ch-name").value=d.name||"";
+    document.getElementById("ch-desc").value=d.description||"";
+    document.getElementById("ch-color").value=d.color||"#4c9ede";
+    document.getElementById("ch-ord").value=d.order||0;
+    document.getElementById("ch-lock").checked=!!d.adminOnly;
+  } else {
+    document.getElementById("ch-name").value="";document.getElementById("ch-desc").value="";
+    document.getElementById("ch-color").value="#4c9ede";document.getElementById("ch-ord").value=channels.length;
+    document.getElementById("ch-lock").checked=false;
+  }
+  openM("m-ch");
+};
+window.saveChannel=async()=>{
+  const name=document.getElementById("ch-name").value.trim();
+  const desc=document.getElementById("ch-desc").value.trim();
+  const color=document.getElementById("ch-color").value;
+  const order=parseInt(document.getElementById("ch-ord").value)||0;
+  const adminOnly=document.getElementById("ch-lock").checked;
+  const err=document.getElementById("ch-err");
+  err.classList.add("hidden");
+  if(!name){err.textContent="Name required.";err.classList.remove("hidden");return;}
+  try{
+    if(editChId){await updateDoc(doc(db,"channels",editChId),{name,description:desc,color,order,adminOnly});}
+    else{await addDoc(collection(db,"channels"),{name,description:desc,color,order,adminOnly,createdAt:serverTimestamp()});}
+    closeM("m-ch");
+    aTab("channels",document.querySelector(".atab.on"));
+  } catch(e){err.textContent="Error: "+e.message;err.classList.remove("hidden");}
+};
+
+// ── DELETE ───────────────────────────────────────────────────
+let _del=null;
+window.askDel=(type,id,pid)=>{
+  const msgs={topic:"Delete this topic and all its replies?",reply:"Delete this reply?",channel:"Delete this channel?"};
+  document.getElementById("confirm-msg").textContent=msgs[type]||"Are you sure?";
+  _del={type,id,pid};openM("m-confirm");
+  document.getElementById("confirm-ok").onclick=doDel;
+};
+async function doDel(){
+  if(!_del)return;const{type,id,pid}=_del;closeM("m-confirm");
   try{
     if(type==="topic"){
       const rs=await getDocs(collection(db,"topics",id,"replies"));
-      for(const r of rs.docs) await deleteDoc(r.ref);
-      await deleteDoc(doc(db,"topics",id));
-      navigateTo("home",null);
+      for(const r of rs.docs)await deleteDoc(r.ref);
+      await deleteDoc(doc(db,"topics",id));go("home");
     } else if(type==="reply"){
       await deleteDoc(doc(db,"topics",pid,"replies",id));
       await updateDoc(doc(db,"topics",pid),{replyCount:increment(-1)});
       renderTopic(pid);
     } else if(type==="channel"){
       await deleteDoc(doc(db,"channels",id));
-      aTab("channels",document.querySelector(".atab.active"));
+      aTab("channels",document.querySelector(".atab.on"));
     }
-  } catch(e){ alert("Delete failed: "+e.message); }
+  } catch(e){alert("Delete failed: "+e.message);}
   _del=null;
 }
 
-// ─── MODALS ───────────────────────────────────────────────────
-window.openM  = id => document.getElementById(id).classList.add("open");
-window.closeM = id => document.getElementById(id).classList.remove("open");
+// ── MODALS ────────────────────────────────────────────────────
+window.openM=id=>document.getElementById(id).classList.add("open");
+window.closeM=id=>document.getElementById(id).classList.remove("open");
 document.querySelectorAll(".overlay").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("open");}));
 
-// ─── UTILS ────────────────────────────────────────────────────
-function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-function timeAgo(d){
-  if(!d) return "";
+// ── UTILS ─────────────────────────────────────────────────────
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function ago(d){
+  if(!d)return"";
   const s=Math.floor((Date.now()-d.getTime())/1000);
-  if(s<60) return "just now";
-  if(s<3600) return Math.floor(s/60)+"m ago";
-  if(s<86400) return Math.floor(s/3600)+"h ago";
-  if(s<2592000) return Math.floor(s/86400)+"d ago";
+  if(s<60)return"just now";if(s<3600)return Math.floor(s/60)+"m ago";
+  if(s<86400)return Math.floor(s/3600)+"h ago";if(s<2592000)return Math.floor(s/86400)+"d ago";
   return d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
 }
-function getPhoto(url, name){
-  return url||`https://ui-avatars.com/api/?name=${encodeURIComponent(name||"U")}&background=1b2838&color=4c9ede`;
-}
+function avatar(name){return`https://ui-avatars.com/api/?name=${encodeURIComponent(name||"U")}&background=1b2838&color=4c9ede`;}
+function getPhoto(url,name){return url||avatar(name);}
+async function getUD(uid){try{const s=await getDoc(doc(db,"users",uid));return s.exists()?s.data():null;}catch{return null;}}
 
-// ─── BOOT ─────────────────────────────────────────────────────
+// ── BOOT ─────────────────────────────────────────────────────
 renderNav();
-navigateTo("home",null);
+render();
 </script>
 </body>
 </html>
