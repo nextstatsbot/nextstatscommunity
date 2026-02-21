@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>NextStats Community</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+/* ─── VARIABLES ─────────────────────────────────────────── */
+:root{
+  --bg:#111920;--bg2:#171f28;--bg3:#1e2a35;--bg4:#243342;
+  --border:#2a3a47;--steam:#4c9ede;--steam-dk:#1b2838;
+  --steam-hover:#6ab4e8;--text:#c7d5e0;--text2:#7a94a8;
+  --white:#e8eef3;--radius:4px;--green:#4caf8a;--red:#e05252;
+  --yellow:#e0b252;--purple:#8b7ee8;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Poppins",sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+a{color:var(--steam);text-decoration:none}a:hover{color:var(--steam-hover)}
+button{cursor:pointer;font-family:"Poppins",sans-serif}
+input,textarea,select{font-family:"Poppins",sans-serif;font-size:14px}
+
+/* ─── SCROLLBAR ─────────────────────────────────────────── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text2)}
+
+/* ─── NAV ───────────────────────────────────────────────── */
+nav{background:var(--steam-dk);border-bottom:1px solid #243342;position:sticky;top:0;z-index:200;height:52px;display:flex;align-items:center;padding:0 20px;gap:0}
+.nav-logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:16px;color:var(--white);text-decoration:none;flex-shrink:0}
+.nav-logo img{width:26px;height:26px;object-fit:contain}
+.nav-logo .brand-next{color:var(--white)}
+.nav-logo .brand-stats{color:var(--steam)}
+.nav-sep{width:1px;height:24px;background:var(--border);margin:0 14px;flex-shrink:0}
+.nav-title{font-weight:700;font-size:13px;color:var(--text2);letter-spacing:.3px}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:var(--radius);font-size:13px;font-weight:600;border:none;transition:all .15s;text-decoration:none}
+.btn-primary{background:var(--steam);color:#fff}
+.btn-primary:hover{background:var(--steam-hover);color:#fff}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}
+.btn-ghost:hover{color:var(--white);border-color:var(--text2)}
+.btn-danger{background:rgba(224,82,82,.12);color:var(--red);border:1px solid rgba(224,82,82,.2)}
+.btn-danger:hover{background:rgba(224,82,82,.2)}
+.btn-sm{padding:4px 10px;font-size:12px}
+.btn-green{background:rgba(76,175,138,.12);color:var(--green);border:1px solid rgba(76,175,138,.2)}
+.btn-green:hover{background:rgba(76,175,138,.2)}
+.avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--border);flex-shrink:0}
+.avatar-sm{width:24px;height:24px;border-width:1px}
+.avatar-lg{width:40px;height:40px}
+.user-menu{position:relative}
+.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--bg2);border:1px solid var(--border);border-radius:6px;min-width:180px;padding:6px;display:none;z-index:300;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.user-menu:hover .user-dropdown,.user-dropdown:hover{display:block}
+.user-dropdown a,.user-dropdown button{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--radius);color:var(--text);font-size:13px;font-weight:500;width:100%;background:transparent;border:none;text-align:left;transition:background .1s}
+.user-dropdown a:hover,.user-dropdown button:hover{background:var(--bg3);color:var(--white)}
+.user-dropdown .divider{height:1px;background:var(--border);margin:4px 0}
+
+/* ─── LAYOUT ────────────────────────────────────────────── */
+.layout{max-width:1060px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:1fr 280px;gap:24px;align-items:start}
+.layout.full{grid-template-columns:1fr}
+@media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+
+/* ─── SIDEBAR ───────────────────────────────────────────── */
+.sidebar{display:flex;flex-direction:column;gap:16px;position:sticky;top:68px}
+.sidebar-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.sidebar-card-header{padding:12px 16px;border-bottom:1px solid var(--border);font-weight:700;font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;justify-content:space-between}
+.sidebar-card-body{padding:12px 16px}
+.channel-list-nav{list-style:none}
+.channel-list-nav li a{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:var(--radius);color:var(--text2);font-size:13px;font-weight:500;transition:all .12s}
+.channel-list-nav li a:hover,.channel-list-nav li a.active{background:var(--bg3);color:var(--white)}
+.channel-list-nav li a .ch-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.channel-list-nav li a .ch-count{margin-left:auto;font-size:11px;color:var(--text2)}
+
+/* ─── CARDS ─────────────────────────────────────────────── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:6px}
+.card-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.card-header h2{font-weight:700;font-size:15px;color:var(--white)}
+.card-body{padding:18px}
+
+/* ─── TOPICS TABLE ──────────────────────────────────────── */
+.topics-table{width:100%;border-collapse:collapse}
+.topics-table th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.7px;border-bottom:1px solid var(--border)}
+.topics-table th:not(:first-child){text-align:center;width:70px}
+.topics-table td{padding:12px 14px;border-bottom:1px solid rgba(42,58,71,.5);vertical-align:middle}
+.topics-table tr:last-child td{border-bottom:none}
+.topics-table tr:hover td{background:rgba(30,42,53,.4)}
+.topic-row{transition:background .12s}
+.topic-title-cell{}
+.topic-title-link{font-weight:600;font-size:13px;color:var(--white);display:block;margin-bottom:3px;transition:color .12s}
+.topic-title-link:hover{color:var(--steam)}
+.topic-meta-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.topic-cat-badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:3px;text-decoration:none}
+.topic-tag{font-size:11px;color:var(--text2);background:var(--bg3);padding:1px 6px;border-radius:3px}
+.topic-stat{font-size:13px;color:var(--text2);text-align:center}
+.topic-pinned-icon{color:var(--yellow);font-size:11px;margin-right:4px}
+
+/* ─── BADGES ────────────────────────────────────────────── */
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px}
+.badge-admin{background:rgba(139,126,232,.15);color:var(--purple);border:1px solid rgba(139,126,232,.3)}
+.badge-bug{background:rgba(224,82,82,.1);color:var(--red)}
+.badge-feature{background:rgba(76,158,222,.1);color:var(--steam)}
+.badge-general{background:rgba(76,175,138,.1);color:var(--green)}
+.badge-announce{background:rgba(224,178,82,.1);color:var(--yellow)}
+.badge-status-confirmed{background:rgba(224,82,82,.08);color:var(--red);border:1px solid rgba(224,82,82,.2)}
+.badge-status-fixed{background:rgba(76,175,138,.08);color:var(--green);border:1px solid rgba(76,175,138,.2)}
+.badge-status-wontfix{background:rgba(122,148,168,.08);color:var(--text2);border:1px solid var(--border)}
+
+/* ─── TOPIC DETAIL ──────────────────────────────────────── */
+.topic-hero{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:22px 24px;margin-bottom:2px}
+.topic-hero h1{font-weight:900;font-size:clamp(16px,2.5vw,22px);color:var(--white);margin-bottom:8px}
+.topic-hero-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.post-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:8px}
+.post-author{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.post-author-info{}
+.post-author-name{font-weight:600;font-size:13px;color:var(--white)}
+.post-author-date{font-size:11px;color:var(--text2)}
+.post-body{font-size:14px;font-weight:400;color:var(--text);line-height:1.75;white-space:pre-wrap;word-break:break-word}
+.post-actions{display:flex;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.reply-form{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-top:8px}
+.reply-form h3{font-weight:700;font-size:14px;color:var(--white);margin-bottom:14px}
+
+/* ─── FORMS ─────────────────────────────────────────────── */
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.form-input,.form-textarea,.form-select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--white);padding:9px 12px;transition:border-color .15s;outline:none}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--steam)}
+.form-textarea{resize:vertical;min-height:120px}
+.form-select option{background:var(--bg2)}
+.form-hint{font-size:11px;color:var(--text2);margin-top:4px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* ─── MODAL ─────────────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(10,15,20,.85);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:8px;width:100%;max-width:480px;overflow:hidden}
+.modal-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-weight:700;font-size:15px;color:var(--white)}
+.modal-close{background:transparent;border:none;color:var(--text2);font-size:20px;line-height:1;cursor:pointer;padding:2px 6px;border-radius:var(--radius)}
+.modal-close:hover{color:var(--white);background:var(--bg3)}
+.modal-body{padding:22px}
+.modal-footer{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
+
+/* ─── ADMIN PANEL ───────────────────────────────────────── */
+.admin-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px}
+.admin-tab{background:transparent;border:none;color:var(--text2);font-weight:600;font-size:13px;padding:10px 18px;border-bottom:2px solid transparent;cursor:pointer;transition:all .15s;margin-bottom:-1px}
+.admin-tab.active,.admin-tab:hover{color:var(--white)}
+.admin-tab.active{border-bottom-color:var(--steam)}
+.admin-table{width:100%;border-collapse:collapse}
+.admin-table th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.7px;border-bottom:1px solid var(--border)}
+.admin-table td{padding:11px 14px;border-bottom:1px solid rgba(42,58,71,.4);font-size:13px;vertical-align:middle}
+.admin-table tr:last-child td{border-bottom:none}
+
+/* ─── MISC ──────────────────────────────────────────────── */
+.page-header{background:linear-gradient(180deg,#162130 0%,var(--bg) 100%);border-bottom:1px solid var(--border);padding:32px 20px}
+.page-header-inner{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.page-header h1{font-weight:900;font-size:clamp(18px,3vw,26px);color:var(--white)}
+.page-header p{color:var(--text2);font-size:13px;margin-top:2px}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:16px;flex-wrap:wrap}
+.breadcrumb a{color:var(--text2)}
+.breadcrumb a:hover{color:var(--white)}
+.breadcrumb-sep{color:var(--border)}
+.empty-state{text-align:center;padding:48px 24px}
+.empty-state .icon{font-size:36px;margin-bottom:12px;opacity:.4}
+.empty-state p{color:var(--text2);font-size:14px}
+.loading{text-align:center;padding:40px;color:var(--text2);font-size:13px}
+.alert{padding:12px 16px;border-radius:var(--radius);font-size:13px;margin-bottom:16px;display:flex;align-items:flex-start;gap:8px}
+.alert-info{background:rgba(76,158,222,.08);border:1px solid rgba(76,158,222,.2);color:var(--steam)}
+.alert-warn{background:rgba(224,82,82,.08);border:1px solid rgba(224,82,82,.2);color:var(--red)}
+.tag-input-wrap{display:flex;flex-wrap:wrap;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:6px 8px;cursor:text;min-height:40px;align-items:center}
+.tag-input-wrap:focus-within{border-color:var(--steam)}
+.tag-chip{background:var(--bg3);color:var(--text);font-size:11px;padding:2px 8px;border-radius:3px;display:flex;align-items:center;gap:4px}
+.tag-chip button{background:transparent;border:none;color:var(--text2);font-size:13px;line-height:1;cursor:pointer;padding:0 1px}
+.tag-chip button:hover{color:var(--white)}
+.tag-input-wrap input{border:none;background:transparent;outline:none;color:var(--white);font-size:13px;font-family:"Poppins",sans-serif;flex:1;min-width:80px}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(76,158,222,.3);border-top-color:var(--steam);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.color-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+footer{background:var(--steam-dk);border-top:1px solid #243342;padding:22px 20px;margin-top:60px}
+.footer-inner{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.footer-logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:13px;color:var(--white);text-decoration:none}
+.footer-logo img{width:20px;height:20px}
+.footer-links{display:flex;gap:18px;margin-left:auto}
+.footer-links a{font-size:12px;color:var(--text2)}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{font-size:11px;color:var(--text2);width:100%;margin-top:6px}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a href="#" onclick="navigateTo('home')" class="nav-logo">
+    <img src="logo-dark.png" alt="NextStats"/>
+    <span class="brand-next">Next</span><span class="brand-stats">Stats</span>
+  </a>
+  <div class="nav-sep"></div>
+  <span class="nav-title">Community</span>
+  <div class="nav-right" id="nav-right">
+    <div class="loading" style="padding:0"><span class="spinner"></span></div>
+  </div>
+</nav>
+
+<!-- ══ VIEWS ══ -->
+<div id="app"></div>
+
+<!-- ══ LOGIN MODAL ══ -->
+<div class="modal-overlay" id="login-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Sign in to NextStats Community</h3>
+      <button class="modal-close" onclick="closeModal('login-modal')">×</button>
+    </div>
+    <div class="modal-body" style="text-align:center">
+      <div style="font-size:36px;margin-bottom:12px">💬</div>
+      <p style="color:var(--text2);margin-bottom:24px;font-size:13px">Sign in with your Google account to post topics, reply to discussions, and report bugs.</p>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;gap:10px;padding:11px" onclick="signInGoogle()">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18L12.048 13.56C11.242 14.1 10.211 14.42 9 14.42c-2.392 0-4.416-1.614-5.14-3.786H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.86 10.634A5.278 5.278 0 0 1 3.583 9c0-.563.097-1.11.277-1.634V5.034H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.034l2.903-2.4z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 5.034l2.903 2.332C4.584 5.194 6.608 3.58 9 3.58z"/></svg>
+        Continue with Google
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NEW TOPIC MODAL ══ -->
+<div class="modal-overlay" id="new-topic-modal">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header">
+      <h3>New Topic</h3>
+      <button class="modal-close" onclick="closeModal('new-topic-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Title</label>
+        <input type="text" id="nt-title" class="form-input" placeholder="Brief, descriptive title…" maxlength="120"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Channel</label>
+          <select id="nt-channel" class="form-select"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tags <span style="font-weight:400;text-transform:none">(optional)</span></label>
+          <div class="tag-input-wrap" id="tag-wrap">
+            <input type="text" id="tag-raw" placeholder="Add tag…" onkeydown="handleTagKey(event)"/>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea id="nt-body" class="form-textarea" placeholder="Describe the issue or idea in detail…" style="min-height:160px"></textarea>
+      </div>
+      <div id="nt-error" class="alert alert-warn hidden"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('new-topic-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitNewTopic()">Post Topic</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN: CHANNEL MODAL ══ -->
+<div class="modal-overlay" id="channel-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="ch-modal-title">New Channel</h3>
+      <button class="modal-close" onclick="closeModal('channel-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input type="text" id="ch-name" class="form-input" placeholder="e.g. Bug Reports"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <input type="text" id="ch-desc" class="form-input" placeholder="Short description"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Color</label>
+          <input type="color" id="ch-color" value="#4c9ede" style="width:100%;height:40px;border-radius:4px;border:1px solid var(--border);background:var(--bg);cursor:pointer;padding:2px"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Order</label>
+          <input type="number" id="ch-order" class="form-input" value="0" min="0"/>
+        </div>
+      </div>
+      <div id="ch-error" class="alert alert-warn hidden"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('channel-modal')">Cancel</button>
+      <button class="btn btn-primary" id="ch-submit" onclick="submitChannel()">Create Channel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONFIRM MODAL ══ -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-header">
+      <h3 id="confirm-title">Confirm</h3>
+      <button class="modal-close" onclick="closeModal('confirm-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <p id="confirm-msg" style="color:var(--text);font-size:13px"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('confirm-modal')">Cancel</button>
+      <button class="btn btn-danger" id="confirm-ok">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo">
+      <img src="logo-dark.png" alt="NextStats"/>
+      <span style="color:var(--white)">Next</span><span style="color:var(--steam)">Stats</span>
+    </a>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+    <div class="footer-copy">NextStats Community · Not affiliated with Valve, Steam or Epic Games.</div>
+  </div>
+</footer>
+
+<!-- ══ FIREBASE SDK ══ -->
+<script type="module">
+// ╔══════════════════════════════════════════════════════════╗
+// ║  CONFIGURE YOUR FIREBASE PROJECT BELOW                   ║
+// ║  1. Go to https://console.firebase.google.com            ║
+// ║  2. Create a project → Add Web App                       ║
+// ║  3. Copy your config object here                         ║
+// ║  4. Enable Google Sign-In in Authentication              ║
+// ║  5. Create a Firestore database (production mode)        ║
+// ║  6. Set Firestore rules (see bottom of this file)        ║
+// ╚══════════════════════════════════════════════════════════╝
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyBAoRBkeRIqENIazgn1msR1f6iFOrNqHX0",
+  authDomain:        "nextstatsblog.firebaseapp.com",
+  projectId:         "nextstatsblog",
+  storageBucket:     "nextstatsblog.firebasestorage.app",
+  messagingSenderId: "322308456139",
+  appId:             "1:322308456139:web:b713e421b90a679c3de54e"
+};
+
+// ── Imports ──────────────────────────────────────────────────
+import { initializeApp }          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, doc, addDoc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, query, where, orderBy, limit, onSnapshot, serverTimestamp, increment }
+                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ── Init ─────────────────────────────────────────────────────
+const app  = initializeApp(FIREBASE_CONFIG);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+// ── State ─────────────────────────────────────────────────────
+let currentUser  = null;
+let userDoc      = null;
+let isAdmin      = false;
+let currentView  = "home";
+let channels     = [];
+let activeTags   = [];
+let editChannelId = null;
+
+// ── Auth ──────────────────────────────────────────────────────
+window.signInGoogle = async () => {
+  try { await signInWithPopup(auth, provider); }
+  catch(e){ console.error(e); }
+};
+window.signOutUser = () => signOut(auth);
+
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+  if(user){
+    closeModal("login-modal");
+    // upsert user doc
+    const uRef = doc(db,"users",user.uid);
+    const uSnap = await getDoc(uRef);
+    if(!uSnap.exists()){
+      await setDoc(uRef,{uid:user.uid,name:user.displayName,email:user.email,photo:user.photoURL,isAdmin:false,joinedAt:serverTimestamp()});
+    }
+    userDoc = (await getDoc(uRef)).data();
+    isAdmin = userDoc?.isAdmin || false;
+  } else {
+    userDoc = null; isAdmin = false;
+  }
+  renderNav();
+  renderView(currentView);
+});
+
+// ── Navigation ────────────────────────────────────────────────
+window.navigateTo = (view, param) => {
+  currentView = view;
+  window._viewParam = param;
+  renderView(view, param);
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+function renderView(view, param){
+  param = param || window._viewParam;
+  switch(view){
+    case "home":      renderHome(); break;
+    case "category":  renderCategory(param); break;
+    case "topic":     renderTopic(param); break;
+    case "new-topic": renderNewTopicPage(); break;
+    case "admin":     renderAdmin(); break;
+    default:          renderHome();
+  }
+}
+
+// ── Nav Render ────────────────────────────────────────────────
+function renderNav(){
+  const el = document.getElementById("nav-right");
+  if(currentUser){
+    el.innerHTML = `
+      <button class="btn btn-primary btn-sm" onclick="openNewTopic()">+ New Topic</button>
+      ${isAdmin ? `<button class="btn btn-ghost btn-sm" onclick="navigateTo('admin')">⚙ Admin</button>` : ""}
+      <div class="user-menu">
+        <img class="avatar" src="${currentUser.photoURL||"https://ui-avatars.com/api/?name="+encodeURIComponent(currentUser.displayName||"U")+"&background=1b2838&color=4c9ede"}" alt="${currentUser.displayName}"/>
+        <div class="user-dropdown">
+          <div style="padding:8px 10px 6px;border-bottom:1px solid var(--border);margin-bottom:4px">
+            <div style="font-weight:600;font-size:13px;color:var(--white)">${currentUser.displayName||"User"}</div>
+            <div style="font-size:11px;color:var(--text2)">${currentUser.email}</div>
+            ${isAdmin ? `<span class="badge badge-admin" style="margin-top:4px;display:inline-block">Admin</span>` : ""}
+          </div>
+          <button onclick="signOutUser()">🚪 Sign out</button>
+        </div>
+      </div>`;
+  } else {
+    el.innerHTML = `<button class="btn btn-primary" onclick="openModal('login-modal')">Sign in with Google</button>`;
+  }
+}
+
+// ── Channels Helpers ──────────────────────────────────────────
+async function loadChannels(){
+  const snap = await getDocs(query(collection(db,"channels"),orderBy("order","asc")));
+  channels = snap.docs.map(d=>({id:d.id,...d.data()}));
+  return channels;
+}
+
+function channelBadge(ch){
+  if(!ch) return "";
+  return `<span class="topic-cat-badge" style="background:${ch.color}22;color:${ch.color}">${ch.name}</span>`;
+}
+function getChannel(id){ return channels.find(c=>c.id===id)||{name:id,color:"#7a94a8"}; }
+
+function sidebarHtml(){
+  return `
+  <div class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">Channels</div>
+      <div class="sidebar-card-body" style="padding:8px">
+        <ul class="channel-list-nav">
+          <li><a href="#" onclick="navigateTo('home');return false" class="${currentView==='home'?'active':''}">
+            <span class="ch-dot" style="background:var(--steam)"></span> All Topics
+          </a></li>
+          ${channels.map(c=>`
+          <li><a href="#" onclick="navigateTo('category','${c.id}');return false" class="${currentView==='category'&&window._viewParam===c.id?'active':''}">
+            <span class="ch-dot" style="background:${c.color}"></span>
+            ${c.name}
+          </a></li>`).join("")}
+        </ul>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">Links</div>
+      <div class="sidebar-card-body" style="padding:8px">
+        <ul class="channel-list-nav">
+          <li><a href="index.html">🏠 NextStats Home</a></li>
+          <li><a href="https://discord.gg/" target="_blank">💬 Discord Server</a></li>
+          <li><a href="https://github.com/" target="_blank">🐙 GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── HOME ──────────────────────────────────────────────────────
+async function renderHome(){
+  const app = document.getElementById("app");
+  app.innerHTML = `<div class="page-header"><div class="page-header-inner"><div><h1>Community Forum</h1><p>Report bugs, suggest features, and discuss NextStats.</p></div><button class="btn btn-primary" onclick="openNewTopic()">+ New Topic</button></div></div><div class="layout"><div id="main-col"><div class="loading"><span class="spinner"></span></div></div>${await buildSidebar()}</div>`;
+
+  await loadChannels();
+  rebuildSidebar();
+  const col = document.getElementById("main-col");
+
+  const snap = await getDocs(query(collection(db,"topics"),orderBy("createdAt","desc"),limit(50)));
+  const topics = snap.docs.map(d=>({id:d.id,...d.data()}));
+
+  if(topics.length===0){
+    col.innerHTML = `<div class="card"><div class="empty-state"><div class="icon">💬</div><p>No topics yet. Be the first to post!</p></div></div>`;
+    return;
+  }
+  col.innerHTML = `<div class="card">
+    <div class="card-header"><h2>Recent Discussions</h2></div>
+    <table class="topics-table">
+      <thead><tr><th>Topic</th><th>Replies</th><th>Views</th><th>Activity</th></tr></thead>
+      <tbody>${topics.map(t=>topicRow(t)).join("")}</tbody>
+    </table>
+  </div>`;
+}
+
+async function buildSidebar(){ await loadChannels(); return sidebarHtml(); }
+function rebuildSidebar(){
+  const s = document.querySelector(".sidebar");
+  if(s) s.outerHTML = sidebarHtml();
+  // re-inject since it doesn't replace properly
+  const layout = document.querySelector(".layout");
+  if(layout){
+    const old = layout.querySelector(".sidebar");
+    if(old) old.remove();
+    layout.insertAdjacentHTML("beforeend", sidebarHtml());
+  }
+}
+
+function topicRow(t){
+  const ch = getChannel(t.channelId);
+  const tags = (t.tags||[]).map(tg=>`<span class="topic-tag">${tg}</span>`).join("");
+  const pin = t.pinned ? `<span class="topic-pinned-icon">📌</span>` : "";
+  const ago = timeAgo(t.createdAt?.toDate?.() || new Date());
+  return `<tr class="topic-row" onclick="navigateTo('topic','${t.id}')" style="cursor:pointer">
+    <td class="topic-title-cell">
+      ${pin}<span class="topic-title-link">${esc(t.title)}</span>
+      <div class="topic-meta-row">${channelBadge(ch)}${tags}</div>
+    </td>
+    <td class="topic-stat">${t.replyCount||0}</td>
+    <td class="topic-stat">${t.viewCount||0}</td>
+    <td class="topic-stat" style="font-size:12px;white-space:nowrap">${ago}</td>
+  </tr>`;
+}
+
+// ── CATEGORY ──────────────────────────────────────────────────
+async function renderCategory(channelId){
+  const app = document.getElementById("app");
+  await loadChannels();
+  const ch = getChannel(channelId);
+  app.innerHTML = `<div class="page-header"><div class="page-header-inner"><div><h1>${esc(ch.name)}</h1><p>${esc(ch.description||"")}</p></div><button class="btn btn-primary" onclick="openNewTopic('${channelId}')">+ New Topic</button></div></div>
+  <div class="layout"><div id="main-col"><div class="loading"><span class="spinner"></span></div></div>${sidebarHtml()}</div>`;
+
+  const col = document.getElementById("main-col");
+  const snap = await getDocs(query(collection(db,"topics"),where("channelId","==",channelId),orderBy("pinned","desc"),orderBy("createdAt","desc")));
+  const topics = snap.docs.map(d=>({id:d.id,...d.data()}));
+
+  if(topics.length===0){
+    col.innerHTML = `<div class="card"><div class="empty-state"><div class="icon">💬</div><p>No topics in this channel yet.</p></div></div>`;
+    return;
+  }
+  col.innerHTML = `<div class="card">
+    <div class="card-header"><h2>${esc(ch.name)}</h2></div>
+    <table class="topics-table">
+      <thead><tr><th>Topic</th><th>Replies</th><th>Views</th><th>Activity</th></tr></thead>
+      <tbody>${topics.map(t=>topicRow(t)).join("")}</tbody>
+    </table>
+  </div>`;
+}
+
+// ── TOPIC ─────────────────────────────────────────────────────
+async function renderTopic(topicId){
+  const app = document.getElementById("app");
+  await loadChannels();
+  app.innerHTML = `<div class="page-header"><div class="page-header-inner"><div><div class="breadcrumb"><a href="#" onclick="navigateTo('home');return false">Home</a><span class="breadcrumb-sep">›</span><span>Topic</span></div></div></div></div><div class="layout"><div id="main-col"><div class="loading"><span class="spinner"></span></div></div>${sidebarHtml()}</div>`;
+
+  // increment view
+  const tRef = doc(db,"topics",topicId);
+  await updateDoc(tRef,{viewCount:increment(1)}).catch(()=>{});
+  const tSnap = await getDoc(tRef);
+  if(!tSnap.exists()){ document.getElementById("main-col").innerHTML=`<div class="empty-state"><p>Topic not found.</p></div>`; return; }
+  const t = {id:tSnap.id,...tSnap.data()};
+  const ch = getChannel(t.channelId);
+  const tags = (t.tags||[]).map(tg=>`<span class="topic-tag">${tg}</span>`).join("");
+
+  // replies
+  const rSnap = await getDocs(query(collection(db,"topics",topicId,"replies"),orderBy("createdAt","asc")));
+  const replies = rSnap.docs.map(d=>({id:d.id,...d.data()}));
+
+  const adminBtns = isAdmin ? `
+    <button class="btn btn-ghost btn-sm" onclick="togglePin('${topicId}',${t.pinned||false})">${t.pinned?"📌 Unpin":"📌 Pin"}</button>
+    <button class="btn btn-danger btn-sm" onclick="confirmDelete('topic','${topicId}')">Delete Topic</button>` : "";
+
+  const replyForm = currentUser ? `
+    <div class="reply-form" id="reply-form">
+      <h3>Reply</h3>
+      <div class="form-group"><textarea id="reply-body" class="form-textarea" placeholder="Write your reply…" style="min-height:100px"></textarea></div>
+      <div id="reply-error" class="alert alert-warn hidden"></div>
+      <button class="btn btn-primary" onclick="submitReply('${topicId}')">Post Reply</button>
+    </div>` :
+    `<div class="alert alert-info"><span>💬</span><span><a href="#" onclick="openModal('login-modal');return false">Sign in</a> to reply to this discussion.</span></div>`;
+
+  document.getElementById("main-col").innerHTML = `
+    <div class="topic-hero">
+      <div class="topic-hero-meta" style="margin-bottom:8px">${channelBadge(ch)}${tags}</div>
+      <h1>${esc(t.title)}</h1>
+      <div class="topic-hero-meta">
+        <img class="avatar avatar-sm" src="${t.authorPhoto||""}"/>
+        <span style="font-size:13px;color:var(--text2)">${esc(t.authorName||"Unknown")}</span>
+        <span style="font-size:12px;color:var(--text2)">· ${timeAgo(t.createdAt?.toDate?.()|| new Date())}</span>
+        <div style="margin-left:auto;display:flex;gap:6px">${adminBtns}</div>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-author">
+        <img class="avatar avatar-lg" src="${t.authorPhoto||""}"/>
+        <div class="post-author-info">
+          <div class="post-author-name">${esc(t.authorName||"Unknown")}</div>
+          <div class="post-author-date">${t.createdAt?.toDate?.()?.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})|| ""}</div>
+        </div>
+      </div>
+      <div class="post-body">${esc(t.body||"")}</div>
+    </div>
+    ${replies.map(r=>replyCard(r,topicId)).join("")}
+    <div id="replies-end"></div>
+    ${replyForm}`;
+}
+
+function replyCard(r, topicId){
+  const delBtn = isAdmin ? `<button class="btn btn-danger btn-sm" onclick="confirmDelete('reply','${r.id}','${topicId}')">Delete</button>` : "";
+  return `<div class="post-card" id="reply-${r.id}">
+    <div class="post-author">
+      <img class="avatar avatar-lg" src="${r.authorPhoto||""}"/>
+      <div class="post-author-info">
+        <div class="post-author-name">${esc(r.authorName||"Unknown")}</div>
+        <div class="post-author-date">${r.createdAt?.toDate?.()?.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})|| ""}</div>
+      </div>
+      <div style="margin-left:auto">${delBtn}</div>
+    </div>
+    <div class="post-body">${esc(r.body||"")}</div>
+  </div>`;
+}
+
+window.submitReply = async (topicId) => {
+  const body = document.getElementById("reply-body").value.trim();
+  const err  = document.getElementById("reply-error");
+  err.classList.add("hidden");
+  if(!body){ err.textContent="Reply cannot be empty."; err.classList.remove("hidden"); return; }
+  if(!currentUser){ openModal("login-modal"); return; }
+  const btn = document.querySelector("#reply-form .btn-primary");
+  btn.disabled = true; btn.textContent = "Posting…";
+  try{
+    await addDoc(collection(db,"topics",topicId,"replies"),{
+      body, authorId:currentUser.uid, authorName:currentUser.displayName,
+      authorPhoto:currentUser.photoURL, createdAt:serverTimestamp()
+    });
+    await updateDoc(doc(db,"topics",topicId),{replyCount:increment(1),updatedAt:serverTimestamp()});
+    document.getElementById("reply-body").value = "";
+    // re-render replies section
+    renderTopic(topicId);
+  } catch(e){ err.textContent="Failed to post reply. Try again."; err.classList.remove("hidden"); }
+  btn.disabled=false; btn.textContent="Post Reply";
+};
+
+window.togglePin = async (topicId, pinned) => {
+  await updateDoc(doc(db,"topics",topicId),{pinned:!pinned});
+  renderTopic(topicId);
+};
+
+// ── NEW TOPIC ─────────────────────────────────────────────────
+window.openNewTopic = async (prefillChannel) => {
+  if(!currentUser){ openModal("login-modal"); return; }
+  await loadChannels();
+  const sel = document.getElementById("nt-channel");
+  sel.innerHTML = channels.map(c=>`<option value="${c.id}">${c.name}</option>`).join("");
+  if(prefillChannel) sel.value = prefillChannel;
+  activeTags = [];
+  renderTagChips();
+  document.getElementById("nt-title").value = "";
+  document.getElementById("nt-body").value = "";
+  document.getElementById("nt-error").classList.add("hidden");
+  openModal("new-topic-modal");
+};
+
+window.submitNewTopic = async () => {
+  if(!currentUser){ openModal("login-modal"); return; }
+  const title   = document.getElementById("nt-title").value.trim();
+  const body    = document.getElementById("nt-body").value.trim();
+  const channel = document.getElementById("nt-channel").value;
+  const err     = document.getElementById("nt-error");
+  err.classList.add("hidden");
+  if(!title){ err.textContent="Title is required."; err.classList.remove("hidden"); return; }
+  if(!body){  err.textContent="Description is required."; err.classList.remove("hidden"); return; }
+  if(!channel){ err.textContent="Please select a channel."; err.classList.remove("hidden"); return; }
+  const ch = getChannel(channel);
+  try{
+    const ref = await addDoc(collection(db,"topics"),{
+      title, body, channelId:channel, channelName:ch.name,
+      tags:activeTags, authorId:currentUser.uid, authorName:currentUser.displayName,
+      authorPhoto:currentUser.photoURL, createdAt:serverTimestamp(),
+      updatedAt:serverTimestamp(), replyCount:0, viewCount:0, pinned:false
+    });
+    closeModal("new-topic-modal");
+    navigateTo("topic", ref.id);
+  } catch(e){ err.textContent="Failed to create topic. "+e.message; err.classList.remove("hidden"); }
+};
+
+// tag input
+window.handleTagKey = (e) => {
+  if(e.key==="Enter"||e.key===","){ e.preventDefault(); addTag(); }
+  if(e.key==="Backspace"&&e.target.value===""&&activeTags.length){ activeTags.pop(); renderTagChips(); }
+};
+function addTag(){
+  const inp = document.getElementById("tag-raw");
+  const val = inp.value.trim().toLowerCase().replace(/[^a-z0-9\-:]/g,"");
+  if(val && !activeTags.includes(val) && activeTags.length<5){ activeTags.push(val); renderTagChips(); }
+  inp.value = "";
+}
+window.removeTag = (t) => { activeTags = activeTags.filter(x=>x!==t); renderTagChips(); };
+function renderTagChips(){
+  const wrap = document.getElementById("tag-wrap");
+  if(!wrap) return;
+  const chips = activeTags.map(t=>`<span class="tag-chip">${t}<button onclick="removeTag('${t}')">×</button></span>`).join("");
+  const inp = wrap.querySelector("input");
+  wrap.innerHTML = chips;
+  wrap.insertAdjacentHTML("beforeend",`<input type="text" id="tag-raw" placeholder="${activeTags.length?"":"Add tag…"}" onkeydown="handleTagKey(event)"/>`);
+}
+
+// ── ADMIN PANEL ───────────────────────────────────────────────
+async function renderAdmin(){
+  if(!isAdmin){ document.getElementById("app").innerHTML=`<div class="layout full"><div class="empty-state"><p>Access denied.</p></div></div>`; return; }
+  await loadChannels();
+  const app = document.getElementById("app");
+  app.innerHTML = `
+  <div class="page-header"><div class="page-header-inner"><div><h1>⚙ Admin Panel</h1><p>Manage channels, topics, and users.</p></div></div></div>
+  <div class="layout full" style="max-width:900px;margin:0 auto">
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="adminTab('channels',this)">Channels</button>
+      <button class="admin-tab" onclick="adminTab('topics',this)">Topics</button>
+      <button class="admin-tab" onclick="adminTab('users',this)">Users</button>
+    </div>
+    <div id="admin-content"></div>
+  </div>`;
+  adminTab("channels", document.querySelector(".admin-tab"));
+}
+
+window.adminTab = async (tab, btn) => {
+  document.querySelectorAll(".admin-tab").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  const content = document.getElementById("admin-content");
+  content.innerHTML = `<div class="loading"><span class="spinner"></span></div>`;
+
+  if(tab==="channels"){
+    await loadChannels();
+    content.innerHTML = `
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+        <button class="btn btn-primary" onclick="openChannelModal()">+ New Channel</button>
+      </div>
+      <div class="card">
+        <table class="admin-table">
+          <thead><tr><th>Name</th><th>Description</th><th>Color</th><th>Order</th><th>Actions</th></tr></thead>
+          <tbody>${channels.map(c=>`
+          <tr>
+            <td><strong style="color:var(--white)">${esc(c.name)}</strong></td>
+            <td style="color:var(--text2)">${esc(c.description||"")}</td>
+            <td><span class="color-dot" style="background:${c.color};display:inline-block"></span> ${c.color}</td>
+            <td>${c.order||0}</td>
+            <td><div style="display:flex;gap:6px">
+              <button class="btn btn-ghost btn-sm" onclick="openChannelModal('${c.id}')">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="confirmDelete('channel','${c.id}')">Delete</button>
+            </div></td>
+          </tr>`).join("")}
+          ${channels.length===0?`<tr><td colspan="5" style="text-align:center;color:var(--text2);padding:24px">No channels yet.</td></tr>`:""}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  if(tab==="topics"){
+    const snap = await getDocs(query(collection(db,"topics"),orderBy("createdAt","desc"),limit(100)));
+    const topics = snap.docs.map(d=>({id:d.id,...d.data()}));
+    content.innerHTML = `<div class="card">
+      <table class="admin-table">
+        <thead><tr><th>Title</th><th>Channel</th><th>Author</th><th>Replies</th><th>Actions</th></tr></thead>
+        <tbody>${topics.map(t=>{
+          const ch = getChannel(t.channelId);
+          return `<tr>
+            <td><a href="#" onclick="navigateTo('topic','${t.id}');return false" style="color:var(--white);font-weight:600">${esc(t.title)}</a></td>
+            <td><span style="color:${ch.color}">${esc(ch.name)}</span></td>
+            <td style="color:var(--text2)">${esc(t.authorName||"?")}</td>
+            <td>${t.replyCount||0}</td>
+            <td><div style="display:flex;gap:6px">
+              <button class="btn btn-ghost btn-sm" onclick="togglePin('${t.id}',${t.pinned||false})">${t.pinned?"Unpin":"📌 Pin"}</button>
+              <button class="btn btn-danger btn-sm" onclick="confirmDelete('topic','${t.id}')">Delete</button>
+            </div></td>
+          </tr>`;}).join("")}
+        ${topics.length===0?`<tr><td colspan="5" style="text-align:center;color:var(--text2);padding:24px">No topics.</td></tr>`:""}
+        </tbody>
+      </table>
+    </div>`;
+  }
+
+  if(tab==="users"){
+    const snap = await getDocs(query(collection(db,"users"),orderBy("joinedAt","desc")));
+    const users = snap.docs.map(d=>({id:d.id,...d.data()}));
+    content.innerHTML = `<div class="card">
+      <table class="admin-table">
+        <thead><tr><th>User</th><th>Email</th><th>Joined</th><th>Role</th><th>Actions</th></tr></thead>
+        <tbody>${users.map(u=>`
+          <tr>
+            <td><div style="display:flex;align-items:center;gap:8px">
+              <img class="avatar avatar-sm" src="${u.photo||""}"/>
+              <span style="color:var(--white);font-weight:600">${esc(u.name||"Unknown")}</span>
+            </div></td>
+            <td style="color:var(--text2)">${esc(u.email||"")}</td>
+            <td style="color:var(--text2);font-size:12px">${u.joinedAt?.toDate?.()?.toLocaleDateString()||""}</td>
+            <td>${u.isAdmin?`<span class="badge badge-admin">Admin</span>`:""}</td>
+            <td>
+              ${u.uid !== currentUser?.uid ? `<button class="btn ${u.isAdmin?"btn-danger":"btn-green"} btn-sm" onclick="toggleAdmin('${u.id}',${u.isAdmin||false})">${u.isAdmin?"Revoke Admin":"Make Admin"}</button>` : "<span style='color:var(--text2);font-size:12px'>You</span>"}
+            </td>
+          </tr>`).join("")}
+        </tbody>
+      </table>
+    </div>`;
+  }
+};
+
+window.toggleAdmin = async (uid, current) => {
+  await updateDoc(doc(db,"users",uid),{isAdmin:!current});
+  adminTab("users", document.querySelector(".admin-tab.active"));
+};
+
+// ── CHANNEL CRUD ──────────────────────────────────────────────
+window.openChannelModal = async (id) => {
+  editChannelId = id||null;
+  document.getElementById("ch-modal-title").textContent = id ? "Edit Channel" : "New Channel";
+  document.getElementById("ch-submit").textContent = id ? "Save Changes" : "Create Channel";
+  document.getElementById("ch-error").classList.add("hidden");
+  if(id){
+    const snap = await getDoc(doc(db,"channels",id));
+    const d = snap.data()||{};
+    document.getElementById("ch-name").value  = d.name||"";
+    document.getElementById("ch-desc").value  = d.description||"";
+    document.getElementById("ch-color").value = d.color||"#4c9ede";
+    document.getElementById("ch-order").value = d.order||0;
+  } else {
+    document.getElementById("ch-name").value  = "";
+    document.getElementById("ch-desc").value  = "";
+    document.getElementById("ch-color").value = "#4c9ede";
+    document.getElementById("ch-order").value = channels.length;
+  }
+  openModal("channel-modal");
+};
+
+window.submitChannel = async () => {
+  const name  = document.getElementById("ch-name").value.trim();
+  const desc  = document.getElementById("ch-desc").value.trim();
+  const color = document.getElementById("ch-color").value;
+  const order = parseInt(document.getElementById("ch-order").value)||0;
+  const err   = document.getElementById("ch-error");
+  err.classList.add("hidden");
+  if(!name){ err.textContent="Name is required."; err.classList.remove("hidden"); return; }
+  try{
+    if(editChannelId){
+      await updateDoc(doc(db,"channels",editChannelId),{name,description:desc,color,order});
+    } else {
+      await addDoc(collection(db,"channels"),{name,description:desc,color,order,createdAt:serverTimestamp()});
+    }
+    closeModal("channel-modal");
+    adminTab("channels", document.querySelector(".admin-tab.active"));
+  } catch(e){ err.textContent="Error: "+e.message; err.classList.remove("hidden"); }
+};
+
+// ── DELETE ────────────────────────────────────────────────────
+let _deleteAction = null;
+window.confirmDelete = (type, id, parentId) => {
+  const msgs = {topic:"Delete this topic and all its replies?",reply:"Delete this reply?",channel:"Delete this channel? Topics will NOT be deleted."};
+  document.getElementById("confirm-title").textContent = "Confirm Delete";
+  document.getElementById("confirm-msg").textContent = msgs[type]||"Are you sure?";
+  _deleteAction = {type,id,parentId};
+  openModal("confirm-modal");
+  document.getElementById("confirm-ok").onclick = executeDelete;
+};
+async function executeDelete(){
+  if(!_deleteAction) return;
+  const {type,id,parentId} = _deleteAction;
+  closeModal("confirm-modal");
+  try{
+    if(type==="topic"){
+      // delete replies subcollection
+      const rSnap = await getDocs(collection(db,"topics",id,"replies"));
+      for(const r of rSnap.docs) await deleteDoc(r.ref);
+      await deleteDoc(doc(db,"topics",id));
+      navigateTo("home");
+    } else if(type==="reply"){
+      await deleteDoc(doc(db,"topics",parentId,"replies",id));
+      await updateDoc(doc(db,"topics",parentId),{replyCount:increment(-1)});
+      renderTopic(parentId);
+    } else if(type==="channel"){
+      await deleteDoc(doc(db,"channels",id));
+      adminTab("channels", document.querySelector(".admin-tab.active"));
+    }
+  } catch(e){ alert("Delete failed: "+e.message); }
+  _deleteAction = null;
+}
+
+// ── MODALS ────────────────────────────────────────────────────
+window.openModal  = (id) => document.getElementById(id).classList.add("open");
+window.closeModal = (id) => document.getElementById(id).classList.remove("open");
+document.querySelectorAll(".modal-overlay").forEach(m=>{
+  m.addEventListener("click", e=>{ if(e.target===m) m.classList.remove("open"); });
+});
+
+// ── UTILS ─────────────────────────────────────────────────────
+function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function timeAgo(d){
+  if(!d) return "";
+  const s = Math.floor((Date.now()-d.getTime())/1000);
+  if(s<60) return "just now";
+  if(s<3600) return Math.floor(s/60)+"m ago";
+  if(s<86400) return Math.floor(s/3600)+"h ago";
+  if(s<2592000) return Math.floor(s/86400)+"d ago";
+  return d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+}
+
+// ── BOOT ──────────────────────────────────────────────────────
+renderNav();
+navigateTo("home");
+</script>
+</body>
+</html>
