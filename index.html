@@ -331,7 +331,7 @@ input:checked+.toggle-slider:before{transform:translateX(18px);background:#fff}
 <footer>
   <div class="footer-inner">
     <a href="/" class="footer-logo"><img src="logo-dark.png" alt=""/><span class="flogo-text"><span class="nx">Next</span><span class="st">Stats</span></span></a>
-    <div class="footer-links"><a href="/">Home</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+    <div class="footer-links"><a href="https://nextstatsbot.github.io/nextstatsbot/privacy.html" target="_blank">Privacy Policy</a><a href="https://nextstatsbot.github.io/nextstatsbot/terms.html" target="_blank">Terms of Use</a></div>
     <div class="footer-copy">NextStats Community · Not affiliated with Valve, Steam or Epic Games.</div>
   </div>
 </footer>
@@ -480,12 +480,15 @@ function sidebarHTML(){
     </div></div>
     <div class="scard"><div class="scard-hd">Links</div><div class="scard-bd">
       <ul class="ch-nav">
-        <li><a href="/">🏠 NextStats Home</a></li>
-        <li><a href="https://discord.gg/" target="_blank">💬 Discord</a></li>
-        <li><a href="https://github.com/" target="_blank">🐙 GitHub</a></li>
+        <li><a href="https://nextstatsbot.github.io/nextstatsbot/" target="_blank">🤖 NextStats Discord Bot</a></li>
       </ul>
     </div></div>
   </div>`;
+}
+
+function injectSidebar(){
+  const slot = document.getElementById("sidebar-slot");
+  if(slot) slot.outerHTML = sidebarHTML();
 }
 
 // ─── HOME ────────────────────────────────────────────────────
@@ -494,12 +497,14 @@ async function renderHome(){
   app.innerHTML = `<div class="phdr"><div class="phdr-inner"><div><h1>Community Forum</h1><p>Report bugs, suggest features, and discuss NextStats.</p></div><button class="btn btn-primary" onclick="openNewTopic()">+ New Topic</button></div></div>
   <div class="layout"><div id="main-col"><div class="loading"><span class="spinner"></span></div></div><div id="sidebar-slot"></div></div>`;
   await loadChannels();
-  document.getElementById("sidebar-slot").outerHTML = sidebarHTML();
-  const snap = await getDocs(query(collection(db,"topics"),orderBy("createdAt","desc"),limit(60)));
-  const topics = snap.docs.map(d=>({id:d.id,...d.data()}));
+  injectSidebar();
   const col = document.getElementById("main-col");
-  if(!topics.length){ col.innerHTML=`<div class="card"><div class="empty"><div class="empty-icon">💬</div>No topics yet. Be the first to post!</div></div>`; return; }
-  col.innerHTML = `<div class="card"><div class="card-hd"><h2>Recent Discussions</h2></div><table class="ttable"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Views</th><th>Activity</th></tr></thead><tbody>${topics.map(topicRow).join("")}</tbody></table></div>`;
+  try{
+    const snap = await getDocs(query(collection(db,"topics"),orderBy("createdAt","desc"),limit(60)));
+    const topics = snap.docs.map(d=>({id:d.id,...d.data()}));
+    if(!topics.length){ col.innerHTML=`<div class="card"><div class="empty"><div class="empty-icon">💬</div>No topics yet. Be the first to post!</div></div>`; return; }
+    col.innerHTML = `<div class="card"><div class="card-hd"><h2>Recent Discussions</h2></div><table class="ttable"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Views</th><th>Activity</th></tr></thead><tbody>${topics.map(topicRow).join("")}</tbody></table></div>`;
+  } catch(e){ col.innerHTML=`<div class="card"><div class="empty">Error loading topics: ${esc(e.message)}</div></div>`; }
 }
 
 // ─── CHANNEL ─────────────────────────────────────────────────
@@ -509,12 +514,17 @@ async function renderChannel(chId){
   const ch = getCh(chId);
   app.innerHTML = `<div class="phdr"><div class="phdr-inner"><div><h1>${esc(ch.name)} ${adminOnlyBadge(ch)}</h1><p>${esc(ch.description||"")}</p></div><button class="btn btn-primary" onclick="openNewTopic('${chId}')">+ New Topic</button></div></div>
   <div class="layout"><div id="main-col"><div class="loading"><span class="spinner"></span></div></div><div id="sidebar-slot"></div></div>`;
-  document.getElementById("sidebar-slot").outerHTML = sidebarHTML();
-  const snap = await getDocs(query(collection(db,"topics"),where("channelId","==",chId),orderBy("pinned","desc"),orderBy("createdAt","desc")));
-  const topics = snap.docs.map(d=>({id:d.id,...d.data()}));
+  injectSidebar();
   const col = document.getElementById("main-col");
-  if(!topics.length){ col.innerHTML=`<div class="card"><div class="empty"><div class="empty-icon">💬</div>No topics in this channel yet.</div></div>`; return; }
-  col.innerHTML = `<div class="card"><div class="card-hd"><h2>${esc(ch.name)}</h2></div><table class="ttable"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Views</th><th>Activity</th></tr></thead><tbody>${topics.map(topicRow).join("")}</tbody></table></div>`;
+  try{
+    // Sem orderBy duplo para evitar exigência de índice composto
+    const snap = await getDocs(query(collection(db,"topics"),where("channelId","==",chId),orderBy("createdAt","desc")));
+    let topics = snap.docs.map(d=>({id:d.id,...d.data()}));
+    // Pinned primeiro (client-side sort)
+    topics.sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0));
+    if(!topics.length){ col.innerHTML=`<div class="card"><div class="empty"><div class="empty-icon">💬</div>No topics in this channel yet.</div></div>`; return; }
+    col.innerHTML = `<div class="card"><div class="card-hd"><h2>${esc(ch.name)}</h2></div><table class="ttable"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Views</th><th>Activity</th></tr></thead><tbody>${topics.map(topicRow).join("")}</tbody></table></div>`;
+  } catch(e){ col.innerHTML=`<div class="card"><div class="empty">Error loading topics: ${esc(e.message)}</div></div>`; }
 }
 
 function topicRow(t){
@@ -536,7 +546,7 @@ async function renderTopic(topicId){
   await loadChannels();
   app.innerHTML = `<div class="phdr"><div class="phdr-inner"><div class="breadcrumb"><a href="#" onclick="navigateTo('home',null);return false">Home</a><span>›</span><span>Topic</span></div></div></div>
   <div class="layout"><div id="main-col"><div class="loading"><span class="spinner"></span></div></div><div id="sidebar-slot"></div></div>`;
-  document.getElementById("sidebar-slot").outerHTML = sidebarHTML();
+  injectSidebar();
 
   await updateDoc(doc(db,"topics",topicId),{viewCount:increment(1)}).catch(()=>{});
   const tSnap = await getDoc(doc(db,"topics",topicId));
@@ -667,40 +677,42 @@ async function renderProfile(uid){
   app.innerHTML = `<div class="phdr"><div class="phdr-inner"><div class="breadcrumb"><a href="#" onclick="navigateTo('home',null);return false">Home</a><span>›</span><span>Profile</span></div></div></div>
   <div class="layout"><div id="main-col"><div class="loading"><span class="spinner"></span></div></div><div id="sidebar-slot"></div></div>`;
   await loadChannels();
-  document.getElementById("sidebar-slot").outerHTML = sidebarHTML();
-  const uSnap = await getDoc(doc(db,"users",uid));
+  injectSidebar();
   const col = document.getElementById("main-col");
-  if(!uSnap.exists()){ col.innerHTML=`<div class="empty">User not found.</div>`; return; }
-  const u = uSnap.data();
-  const photo = getPhoto(u.photo||u.photoURL, u.name);
-  const isOwn = CU && CU.uid===uid;
-
-  const tSnap = await getDocs(query(collection(db,"topics"),where("authorId","==",uid),orderBy("createdAt","desc"),limit(20)));
-  const topics = tSnap.docs.map(d=>({id:d.id,...d.data()}));
-
-  col.innerHTML = `
-    <div class="profile-hero">
-      <img class="avatar-xl" src="${photo}" style="border-radius:50%;border:2px solid var(--border);flex-shrink:0" onerror="this.src='https://ui-avatars.com/api/?name=U&background=1b2838&color=4c9ede'"/>
-      <div class="profile-info">
-        <div class="profile-name">
-          ${esc(u.name||"Unknown")}
-          ${u.isVerified?`<span class="badge badge-verified">✓ Verified</span>`:""}
-          ${u.isAdmin?`<span class="badge badge-admin">👑 Admin</span>`:""}
+  try{
+    const uSnap = await getDoc(doc(db,"users",uid));
+    if(!uSnap.exists()){ col.innerHTML=`<div class="empty">User not found.</div>`; return; }
+    const u = uSnap.data();
+    const photo = getPhoto(u.photo||u.photoURL, u.name);
+    const isOwn = CU && CU.uid===uid;
+    // Query simples sem índice composto
+    const tSnap = await getDocs(query(collection(db,"topics"),where("authorId","==",uid),orderBy("createdAt","desc"),limit(20)));
+    const topics = tSnap.docs.map(d=>({id:d.id,...d.data()}));
+    col.innerHTML = `
+      <div class="profile-hero">
+        <img class="avatar-xl" src="${photo}" style="border-radius:50%;border:2px solid var(--border);flex-shrink:0" onerror="this.src='https://ui-avatars.com/api/?name=U&background=1b2838&color=4c9ede'"/>
+        <div class="profile-info">
+          <div class="profile-name">
+            ${esc(u.name||"Unknown")}
+            ${u.isVerified?`<span class="badge badge-verified">✓ Verified</span>`:""}
+            ${u.isAdmin?`<span class="badge badge-admin">👑 Admin</span>`:""}
+          </div>
+          <div class="profile-meta">Joined ${u.joinedAt?.toDate?.()?.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})||"—"} · ${topics.length} topics posted</div>
+          <div class="profile-bio">${esc(u.bio||"No bio yet.")}</div>
+          ${isOwn?`<button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="openSettings()">⚙ Edit Profile</button>`:""}
         </div>
-        <div class="profile-meta">Joined ${u.joinedAt?.toDate?.()?.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})||"—"} · ${topics.length} topics posted</div>
-        <div class="profile-bio">${esc(u.bio||"No bio yet.")}</div>
-        ${isOwn?`<button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="openSettings()">⚙ Edit Profile</button>`:""}
       </div>
-    </div>
-    <div class="card">
-      <div class="card-hd"><h2>Topics by ${esc(u.name||"this user")}</h2></div>
-      ${topics.length
-        ? `<table class="ttable"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Activity</th></tr></thead><tbody>${topics.map(t=>{
-            const ch=getCh(t.channelId);
-            return `<tr onclick="navigateTo('topic','${t.id}')" style="cursor:pointer"><td><span class="t-title">${esc(t.title)}</span><div class="t-meta">${chBadge(ch)}</div></td><td class="t-stat">${t.replyCount||0}</td><td class="t-stat">❤ ${(t.likedBy||[]).length||0}</td><td class="t-stat" style="font-size:12px">${timeAgo(t.createdAt?.toDate?.())}</td></tr>`;
-          }).join("")}</tbody></table>`
-        : `<div class="empty">No topics posted yet.</div>`}
-    </div>`;
+      <div class="card">
+        <div class="card-hd"><h2>Topics by ${esc(u.name||"this user")}</h2></div>
+        ${topics.length
+          ? `<table class="ttable"><thead><tr><th>Topic</th><th>Replies</th><th>Likes</th><th>Activity</th></tr></thead><tbody>${topics.map(t=>{
+              const ch=getCh(t.channelId);
+              return `<tr onclick="navigateTo('topic','${t.id}')" style="cursor:pointer"><td><span class="t-title">${esc(t.title)}</span><div class="t-meta">${chBadge(ch)}</div></td><td class="t-stat">${t.replyCount||0}</td><td class="t-stat">❤ ${(t.likedBy||[]).length||0}</td><td class="t-stat" style="font-size:12px">${timeAgo(t.createdAt?.toDate?.())}</td></tr>`;
+            }).join("")}</tbody></table>`
+          : `<div class="empty">No topics posted yet.</div>`}
+      </div>`;
+  } catch(e){ col.innerHTML=`<div class="empty">Error loading profile: ${esc(e.message)}<br><br><small style="color:var(--text2)">If this is a Firestore index error, check the browser console for a link to create the required index.</small></div>`; }
+}
 }
 
 // ─── PROFILE SETTINGS ────────────────────────────────────────
